@@ -11,16 +11,42 @@ class ImagesListViewController: UIViewController {
 
     @IBOutlet private var tableView: UITableView!
     
+    private let photosName: [String] = Array(0..<20).map{ "\($0)" }
+    
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        return formatter
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        setTableView()
+    }
+    
+    func setTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
+        
+        tableView.rowHeight = 300
+        
+        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
 
     
-    func configCell(for cell: ImagesListCell) { }
+    func configCell(for cell: ImagesListCell, with indexPath: IndexPath)  {
+        guard let picture: UIImage = UIImage(named: "\(indexPath.row)") else {
+            return
+        }
+        cell.imageView?.image = picture
+        cell.imageView?.layer.cornerRadius = 16
+        cell.imageView?.clipsToBounds = true
+        cell.backgroundColor = .ypBlack
+//        cell.textLabel?.text = dateFormatter.string(from: Date())
+        
+    }
 
 }
 
@@ -35,7 +61,7 @@ extension ImagesListViewController: UITableViewDelegate {
 extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return photosName.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -46,11 +72,9 @@ extension ImagesListViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             
-            configCell(for: imageListCell) // 3
+        configCell(for: imageListCell, with: indexPath) // 3
             return imageListCell // 4
         }
-    
-    
     
 }
 
