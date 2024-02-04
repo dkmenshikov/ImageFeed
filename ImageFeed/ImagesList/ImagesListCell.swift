@@ -8,10 +8,17 @@
 import Foundation
 import UIKit
 
-//@IBDesignable
 final class ImagesListCell: UITableViewCell {
+    
     static let reuseIdentifier: String = "ImagesListCell"
     
-    @IBOutlet var cellPicture: UIImageView!
+    @IBOutlet 
+    var cellPicture: UIImageView!
+    
+    @IBOutlet 
+    var likeButton: UIButton!
+    
+    @IBOutlet 
+    var dateLabel: UILabel!
     
 }

@@ -7,37 +7,18 @@
 
 import Foundation
 import UIKit
- 
-@IBDesignable
-class GradientView: UIView {
-  // 1
-  @IBInspectable var startColor: UIColor = .gradientFrom
-  @IBInspectable var endColor: UIColor = .gradientTo
 
-  override func draw(_ rect: CGRect) {
-    // 2
-    guard let context = UIGraphicsGetCurrentContext() else {
-      return
-    }
-    let colors = [startColor.cgColor, endColor.cgColor]
-    let colorSpace = CGColorSpaceCreateDeviceRGB()
-    let colorLocations: [CGFloat] = [0.0, 1.0]
+class GradientView: UIView {
     
-    guard let gradient = CGGradient(
-      colorsSpace: colorSpace,
-      colors: colors as CFArray,
-      locations: colorLocations
-    ) else {
-      return
+    override open class var layerClass: AnyClass {
+       return CAGradientLayer.classForCoder()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        let gradientLayer = layer as! CAGradientLayer
+        gradientLayer.colors = [UIColor.gradientStart.cgColor, UIColor.gradientEnd.cgColor]
+        backgroundColor = .clear
     }
     
-    let startPoint = CGPoint.zero
-    let endPoint = CGPoint(x: 0, y: bounds.height)
-    context.drawLinearGradient(
-      gradient,
-      start: startPoint,
-      end: endPoint,
-      options: []
-    )
-  }
 }
