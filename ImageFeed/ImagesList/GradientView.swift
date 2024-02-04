@@ -21,4 +21,5 @@ class GradientView: UIView {
         backgroundColor = .clear
     }
     
+    
 }
