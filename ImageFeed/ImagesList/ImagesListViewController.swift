@@ -9,7 +9,7 @@ import UIKit
 
 class ImagesListViewController: UIViewController {
 
-    @IBOutlet private var tableView: UITableView!
+    @IBOutlet var tableView: UITableView!
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     
@@ -28,10 +28,10 @@ class ImagesListViewController: UIViewController {
     func setTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
+//        tableView.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
         
-        tableView.rowHeight = 300
-        
+        tableView.rowHeight = 270
+        tableView.backgroundColor = .ypBlack
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
 
@@ -40,11 +40,13 @@ class ImagesListViewController: UIViewController {
         guard let picture: UIImage = UIImage(named: "\(indexPath.row)") else {
             return
         }
-        cell.imageView?.image = picture
-        cell.imageView?.layer.cornerRadius = 16
-        cell.imageView?.clipsToBounds = true
+        
+        cell.cellPicture.image = picture
+        cell.cellPicture.contentMode = .scaleAspectFill
+        cell.cellPicture.layer.cornerRadius = 16
+        cell.cellPicture.clipsToBounds = true
         cell.backgroundColor = .ypBlack
-//        cell.textLabel?.text = dateFormatter.string(from: Date())
+ 
         
     }
 
