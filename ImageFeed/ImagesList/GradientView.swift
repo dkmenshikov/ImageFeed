@@ -8,15 +8,15 @@
 import Foundation
 import UIKit
 
-class GradientView: UIView {
+final class GradientView: UIView {
     
-    override open class var layerClass: AnyClass {
+    override public class var layerClass: AnyClass {
        return CAGradientLayer.classForCoder()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        let gradientLayer = layer as! CAGradientLayer
+        guard let gradientLayer = layer as? CAGradientLayer else { return }
         gradientLayer.colors = [UIColor.gradientStart.cgColor, UIColor.gradientEnd.cgColor]
         backgroundColor = .clear
     }
