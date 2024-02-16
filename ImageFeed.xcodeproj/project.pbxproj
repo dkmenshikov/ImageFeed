@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3294D94F2B7FA88500776155 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3294D94E2B7FA88500776155 /* ProfileViewController.swift */; };
+		3294D9532B7FAF7B00776155 /* ProfileExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3294D9522B7FAF7B00776155 /* ProfileExitButton.swift */; };
 		32CAB9722B6BFB76001ADBA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CAB9712B6BFB76001ADBA6 /* AppDelegate.swift */; };
 		32CAB9742B6BFB76001ADBA6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CAB9732B6BFB76001ADBA6 /* SceneDelegate.swift */; };
 		32CAB9762B6BFB76001ADBA6 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CAB9752B6BFB76001ADBA6 /* ImagesListViewController.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3294D94E2B7FA88500776155 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		3294D9522B7FAF7B00776155 /* ProfileExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileExitButton.swift; sourceTree = "<group>"; };
 		32CAB96E2B6BFB76001ADBA6 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CAB9712B6BFB76001ADBA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32CAB9732B6BFB76001ADBA6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +45,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3294D9512B7FAF4800776155 /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				3294D94E2B7FA88500776155 /* ProfileViewController.swift */,
+				3294D9522B7FAF7B00776155 /* ProfileExitButton.swift */,
+			);
+			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
 		32CAB9652B6BFB76001ADBA6 = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +76,7 @@
 				32CAB9712B6BFB76001ADBA6 /* AppDelegate.swift */,
 				32CAB9732B6BFB76001ADBA6 /* SceneDelegate.swift */,
 				32CAB9A72B6D98E7001ADBA6 /* ImagesList */,
+				3294D9512B7FAF4800776155 /* ProfileScreen */,
 				32CAB9772B6BFB76001ADBA6 /* Main.storyboard */,
 				32CAB9A82B6E71EA001ADBA6 /* Resources */,
 				32CAB97C2B6BFB85001ADBA6 /* LaunchScreen.storyboard */,
@@ -74,8 +88,8 @@
 		32CAB9A72B6D98E7001ADBA6 /* ImagesList */ = {
 			isa = PBXGroup;
 			children = (
-				32CAB9752B6BFB76001ADBA6 /* ImagesListViewController.swift */,
 				32CAB9A52B6D98A2001ADBA6 /* ImagesListCell.swift */,
+				32CAB9752B6BFB76001ADBA6 /* ImagesListViewController.swift */,
 				32CAB9A92B6E72E3001ADBA6 /* GradientView.swift */,
 			);
 			path = ImagesList;
@@ -160,10 +174,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3294D94F2B7FA88500776155 /* ProfileViewController.swift in Sources */,
 				32CAB9762B6BFB76001ADBA6 /* ImagesListViewController.swift in Sources */,
 				32CAB9A62B6D98A2001ADBA6 /* ImagesListCell.swift in Sources */,
 				32CAB9AA2B6E72E3001ADBA6 /* GradientView.swift in Sources */,
 				32CAB9722B6BFB76001ADBA6 /* AppDelegate.swift in Sources */,
+				3294D9532B7FAF7B00776155 /* ProfileExitButton.swift in Sources */,
 				32CAB9742B6BFB76001ADBA6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
