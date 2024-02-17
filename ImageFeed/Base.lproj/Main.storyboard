@@ -201,9 +201,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20" translatesAutoresizingMaskIntoConstraints="NO" id="GqG-PL-8sh">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="doR-FQ-nvM">
+                                <rect key="frame" x="-20" y="-20" width="240" height="341"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="20" translatesAutoresizingMaskIntoConstraints="NO" id="GqG-PL-8sh">
+                                        <rect key="frame" x="20" y="20" width="200" height="301"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <viewLayoutGuide key="contentLayoutGuide" id="GSk-rQ-461"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="UoW-qy-SzZ"/>
+                            </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dyc-Wz-kFS" userLabel="Backward Button" customClass="BackwardButton" customModule="ImageFeed" customModuleProvider="target">
                                 <rect key="frame" x="9" y="11" width="24" height="24"/>
                                 <constraints>
@@ -220,17 +228,18 @@
                         <viewLayoutGuide key="safeArea" id="nfA-uV-btg"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
-                            <constraint firstItem="GqG-PL-8sh" firstAttribute="bottom" secondItem="HK4-nR-8we" secondAttribute="bottom" id="9E2-Ya-DiW"/>
-                            <constraint firstItem="GqG-PL-8sh" firstAttribute="leading" secondItem="nfA-uV-btg" secondAttribute="leading" id="9Y3-UR-Fax"/>
+                            <constraint firstItem="doR-FQ-nvM" firstAttribute="leading" secondItem="HK4-nR-8we" secondAttribute="leading" id="DPn-v8-WJ5"/>
+                            <constraint firstItem="doR-FQ-nvM" firstAttribute="top" secondItem="HK4-nR-8we" secondAttribute="top" id="FKe-4m-OKQ"/>
                             <constraint firstItem="Dyc-Wz-kFS" firstAttribute="top" secondItem="nfA-uV-btg" secondAttribute="top" constant="11" id="R0O-Ek-lhL"/>
-                            <constraint firstItem="GqG-PL-8sh" firstAttribute="trailing" secondItem="nfA-uV-btg" secondAttribute="trailing" id="er5-M2-awo"/>
+                            <constraint firstItem="doR-FQ-nvM" firstAttribute="bottom" secondItem="nfA-uV-btg" secondAttribute="bottom" id="cAt-os-v7g"/>
+                            <constraint firstItem="doR-FQ-nvM" firstAttribute="trailing" secondItem="HK4-nR-8we" secondAttribute="trailing" id="eFT-OL-jLb"/>
                             <constraint firstItem="Dyc-Wz-kFS" firstAttribute="leading" secondItem="nfA-uV-btg" secondAttribute="leading" constant="9" id="mZc-QR-MvH"/>
-                            <constraint firstItem="GqG-PL-8sh" firstAttribute="top" secondItem="HK4-nR-8we" secondAttribute="top" id="ukV-TG-v4U"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="M8Z-gx-RVD"/>
                     <connections>
                         <outlet property="imageView" destination="GqG-PL-8sh" id="ZKj-Il-p74"/>
+                        <outlet property="scrollView" destination="doR-FQ-nvM" id="8dX-Qd-aA1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="car-Xu-ZlT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
