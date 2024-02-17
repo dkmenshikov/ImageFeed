@@ -110,7 +110,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MMY-FE-k8v" userLabel="Exit Button " customClass="ProfileExitButton" customModule="ImageFeed" customModuleProvider="target">
-                                <rect key="frame" x="329" y="76" width="20" height="22"/>
+                                <rect key="frame" x="339" y="76" width="20" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="65s-Sr-x2y"/>
                                     <constraint firstAttribute="height" constant="22" id="7mT-vp-g1x"/>
@@ -119,10 +119,10 @@
                                 <buttonConfiguration key="configuration" style="plain" image="ProfileExitButton"/>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="oZW-s7-phR" userLabel="Labels Stack View">
-                                <rect key="frame" x="16" y="130" width="146.5" height="70"/>
+                                <rect key="frame" x="16" y="130" width="162" height="70"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Имя Фамилия" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pzt-Yq-Vzr">
-                                        <rect key="frame" x="0.0" y="0.0" width="146.5" height="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name Lastname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pzt-Yq-Vzr" userLabel="Name Lastname Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="162" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="3Gc-xX-emm"/>
                                         </constraints>
@@ -130,8 +130,8 @@
                                         <color key="textColor" name="YP White"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@nickname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Pz-TX-Vql">
-                                        <rect key="frame" x="0.0" y="26" width="146.5" height="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@nickname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Pz-TX-Vql" userLabel="Nickname Label">
+                                        <rect key="frame" x="0.0" y="26" width="162" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="ynJ-qq-G3Z"/>
                                         </constraints>
@@ -139,8 +139,8 @@
                                         <color key="textColor" name="YP Gray"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Statement" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wia-9Z-k1B">
-                                        <rect key="frame" x="0.0" y="52" width="146.5" height="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Statement" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wia-9Z-k1B" userLabel="Statement Label">
+                                        <rect key="frame" x="0.0" y="52" width="162" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="XbA-RC-Yvm"/>
                                         </constraints>
@@ -155,7 +155,7 @@
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
                             <constraint firstItem="oZW-s7-phR" firstAttribute="leading" secondItem="SHV-mu-NT8" secondAttribute="leading" constant="16" id="5ZA-eU-xml"/>
-                            <constraint firstItem="MMY-FE-k8v" firstAttribute="trailing" secondItem="SHV-mu-NT8" secondAttribute="trailing" constant="-26" id="DHP-lL-6bR"/>
+                            <constraint firstItem="MMY-FE-k8v" firstAttribute="trailing" secondItem="SHV-mu-NT8" secondAttribute="trailing" constant="-16" id="DHP-lL-6bR"/>
                             <constraint firstItem="BYW-6a-ZHN" firstAttribute="top" secondItem="SHV-mu-NT8" secondAttribute="top" constant="32" id="Ksr-A2-1hr"/>
                             <constraint firstItem="oZW-s7-phR" firstAttribute="top" secondItem="BYW-6a-ZHN" secondAttribute="bottom" constant="8" id="haa-cE-hLk"/>
                             <constraint firstItem="MMY-FE-k8v" firstAttribute="centerY" secondItem="BYW-6a-ZHN" secondAttribute="centerY" id="k4X-Qb-8jc"/>
