@@ -185,7 +185,7 @@
                     <navigationItem key="navigationItem" id="cFP-Lj-ed7"/>
                     <connections>
                         <outlet property="tableView" destination="wxp-Py-WdB" id="Cbg-9U-JhN"/>
-                        <segue destination="AeH-D5-uUW" kind="show" identifier="ShowSingleImage" id="fmb-Wq-Idp"/>
+                        <segue destination="AeH-D5-uUW" kind="presentation" identifier="ShowSingleImage" id="fmb-Wq-Idp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -195,22 +195,36 @@
         <!--Single Image View Controller-->
         <scene sceneID="5LT-j7-EZT">
             <objects>
-                <viewController id="AeH-D5-uUW" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="AeH-D5-uUW" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HK4-nR-8we">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20" translatesAutoresizingMaskIntoConstraints="NO" id="GqG-PL-8sh">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dyc-Wz-kFS" userLabel="Backward Button" customClass="BackwardButton" customModule="ImageFeed" customModuleProvider="target">
+                                <rect key="frame" x="9" y="11" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="dx8-Pb-bBf"/>
+                                    <constraint firstAttribute="width" constant="24" id="sgs-PT-R21"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="backwardButton"/>
+                                <connections>
+                                    <action selector="didTapBackButton:" destination="AeH-D5-uUW" eventType="touchUpInside" id="p7g-pW-zfn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nfA-uV-btg"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
-                            <constraint firstItem="nfA-uV-btg" firstAttribute="bottom" secondItem="GqG-PL-8sh" secondAttribute="bottom" id="9E2-Ya-DiW"/>
+                            <constraint firstItem="GqG-PL-8sh" firstAttribute="bottom" secondItem="HK4-nR-8we" secondAttribute="bottom" id="9E2-Ya-DiW"/>
                             <constraint firstItem="GqG-PL-8sh" firstAttribute="leading" secondItem="nfA-uV-btg" secondAttribute="leading" id="9Y3-UR-Fax"/>
-                            <constraint firstItem="nfA-uV-btg" firstAttribute="trailing" secondItem="GqG-PL-8sh" secondAttribute="trailing" id="er5-M2-awo"/>
-                            <constraint firstItem="GqG-PL-8sh" firstAttribute="top" secondItem="nfA-uV-btg" secondAttribute="top" id="ukV-TG-v4U"/>
+                            <constraint firstItem="Dyc-Wz-kFS" firstAttribute="top" secondItem="nfA-uV-btg" secondAttribute="top" constant="11" id="R0O-Ek-lhL"/>
+                            <constraint firstItem="GqG-PL-8sh" firstAttribute="trailing" secondItem="nfA-uV-btg" secondAttribute="trailing" id="er5-M2-awo"/>
+                            <constraint firstItem="Dyc-Wz-kFS" firstAttribute="leading" secondItem="nfA-uV-btg" secondAttribute="leading" constant="9" id="mZc-QR-MvH"/>
+                            <constraint firstItem="GqG-PL-8sh" firstAttribute="top" secondItem="HK4-nR-8we" secondAttribute="top" id="ukV-TG-v4U"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="M8Z-gx-RVD"/>
@@ -252,6 +266,7 @@
         <image name="LikeActive" width="126" height="126"/>
         <image name="ProfileExitButton" width="20" height="22"/>
         <image name="UserPicStub" width="70" height="70"/>
+        <image name="backwardButton" width="24" height="24"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="YP Black">

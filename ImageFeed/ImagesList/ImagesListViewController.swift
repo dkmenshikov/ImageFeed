@@ -5,6 +5,7 @@
 //  Created by Dmitriy Menshikov on 1.02.24.
 //
 
+import Foundation
 import UIKit
 
 final class ImagesListViewController: UIViewController {
