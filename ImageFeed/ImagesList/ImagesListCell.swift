@@ -12,9 +12,9 @@ final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier: String = "ImagesListCell"
     
-    @IBOutlet private var cellPicture: UIImageView!
-    @IBOutlet private var likeButton: UIButton!
-    @IBOutlet private var dateLabel: UILabel!
+    @IBOutlet private weak var cellPicture: UIImageView!
+    @IBOutlet private weak var likeButton: UIButton!
+    @IBOutlet private weak var dateLabel: UILabel!
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
