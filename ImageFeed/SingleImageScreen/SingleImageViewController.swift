@@ -33,11 +33,11 @@ final class SingleImageViewController: UIViewController {
     }
     
     
-    @IBAction func didTapBackButton(_ sender: Any) {
+    @IBAction private func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func didTapSharingButton(_ sender: Any) {
+    @IBAction private func didTapSharingButton(_ sender: Any) {
         guard let image else { return }
         let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = sender as? UIView
