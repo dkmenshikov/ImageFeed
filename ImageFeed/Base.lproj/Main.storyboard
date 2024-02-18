@@ -201,7 +201,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="doR-FQ-nvM">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="doR-FQ-nvM">
                                 <rect key="frame" x="-20" y="-20" width="240" height="341"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="20" translatesAutoresizingMaskIntoConstraints="NO" id="GqG-PL-8sh">
@@ -224,16 +224,26 @@
                                     <action selector="didTapBackButton:" destination="AeH-D5-uUW" eventType="touchUpInside" id="p7g-pW-zfn"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2GP-Yo-7Pa" userLabel="Share Button">
+                                <rect key="frame" x="150" y="585" width="75" height="65"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <buttonConfiguration key="configuration" style="plain" image="SharingButton"/>
+                                <connections>
+                                    <action selector="didTapSharingButton:" destination="AeH-D5-uUW" eventType="touchUpInside" id="1do-gN-ipx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nfA-uV-btg"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
-                            <constraint firstItem="doR-FQ-nvM" firstAttribute="leading" secondItem="HK4-nR-8we" secondAttribute="leading" id="DPn-v8-WJ5"/>
                             <constraint firstItem="doR-FQ-nvM" firstAttribute="top" secondItem="HK4-nR-8we" secondAttribute="top" id="FKe-4m-OKQ"/>
+                            <constraint firstItem="nfA-uV-btg" firstAttribute="bottom" secondItem="2GP-Yo-7Pa" secondAttribute="bottom" constant="17" id="Gmv-eb-LuI"/>
                             <constraint firstItem="Dyc-Wz-kFS" firstAttribute="top" secondItem="nfA-uV-btg" secondAttribute="top" constant="11" id="R0O-Ek-lhL"/>
                             <constraint firstItem="doR-FQ-nvM" firstAttribute="bottom" secondItem="nfA-uV-btg" secondAttribute="bottom" id="cAt-os-v7g"/>
                             <constraint firstItem="doR-FQ-nvM" firstAttribute="trailing" secondItem="HK4-nR-8we" secondAttribute="trailing" id="eFT-OL-jLb"/>
+                            <constraint firstItem="doR-FQ-nvM" firstAttribute="leading" secondItem="HK4-nR-8we" secondAttribute="leading" id="keu-HU-pEQ"/>
                             <constraint firstItem="Dyc-Wz-kFS" firstAttribute="leading" secondItem="nfA-uV-btg" secondAttribute="leading" constant="9" id="mZc-QR-MvH"/>
+                            <constraint firstItem="2GP-Yo-7Pa" firstAttribute="centerX" secondItem="nfA-uV-btg" secondAttribute="centerX" id="se5-Vt-Xsg"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="M8Z-gx-RVD"/>
@@ -251,6 +261,7 @@
         <image name="20" width="200" height="301"/>
         <image name="LikeActive" width="126" height="126"/>
         <image name="ProfileExitButton" width="20" height="22"/>
+        <image name="SharingButton" width="51" height="51"/>
         <image name="UserPicStub" width="70" height="70"/>
         <image name="backwardButton" width="24" height="24"/>
         <image name="tab_editorial_active" width="30" height="30"/>
