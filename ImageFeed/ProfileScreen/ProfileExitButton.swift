@@ -13,16 +13,17 @@ final class ProfileExitButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: CGRect(x: 0, y: 0, width: 20, height: 24))
         setTitle("", for: [])
+        setImage(.profileExitButton, for: [])
     }
         
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setTitle("", for: [])
+        setImage(.profileExitButton, for: [])
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        return bounds.insetBy(dx: -24, dy: -20).contains(point)
-
+        return bounds.insetBy(dx: -14, dy: -12).contains(point)
     }
     
 }
