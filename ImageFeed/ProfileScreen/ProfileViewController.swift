@@ -26,7 +26,7 @@ final class ProfileViewController: UIViewController {
         setViews()
     }
     
-//    MARK: - Views creation
+//    MARK: - Views creation private methods
     
     private func setViews() {
         view.backgroundColor = .ypBlack
