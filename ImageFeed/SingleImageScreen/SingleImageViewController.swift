@@ -59,7 +59,9 @@ final class SingleImageViewController: UIViewController {
         let newContentSize = scrollView.contentSize
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
-        scrollView.contentInset = UIEdgeInsets(top: -y, left: x-20, bottom: .zero, right: .zero)
+//        scrollView.contentInset = UIEdgeInsets(top: -y, left: x-20, bottom: .zero, right: .zero)
+        scrollView.contentInset = UIEdgeInsets(top: -y, left: x, bottom: .zero, right: .zero)
+
     }
     
 }

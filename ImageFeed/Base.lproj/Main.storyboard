@@ -202,10 +202,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="doR-FQ-nvM">
-                                <rect key="frame" x="-20" y="-20" width="240" height="341"/>
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="341"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="20" translatesAutoresizingMaskIntoConstraints="NO" id="GqG-PL-8sh">
-                                        <rect key="frame" x="20" y="20" width="200" height="301"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="301"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
