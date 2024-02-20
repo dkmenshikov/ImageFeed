@@ -42,10 +42,10 @@ final class ProfileViewController: UIViewController {
             view.addSubview($0)
         }
         
-        setViewsCounstraints()
+        setViewsConstraints()
     }
     
-    private func createUserpic (image: UIImage) -> UIImageView {
+    private func createUserpic(image: UIImage) -> UIImageView {
         let userpicImageView = UIImageView()
         userpicImageView.image = .userPicStub
         return userpicImageView
@@ -55,15 +55,15 @@ final class ProfileViewController: UIViewController {
         return ProfileExitButton()
     }
     
-    private func createLabel (text: String, textSize: CGFloat, textColor: UIColor) -> UILabel {
+    private func createLabel(text: String, textSize: CGFloat, textColor: UIColor) -> UILabel {
         let label: UILabel = UILabel()
         label.text = text
         label.textColor = textColor
-        label.font = UIFont(name: ".SFUI-Regular", size: textSize)
+        label.font = UIFont.systemFont(ofSize: textSize)
         return label
     }
     
-    private func createStackView (nameLabel: UILabel, nicknameLabel: UILabel, statementLabel: UILabel) -> UIStackView {
+    private func createStackView(nameLabel: UILabel, nicknameLabel: UILabel, statementLabel: UILabel) -> UIStackView {
         let stack = UIStackView(arrangedSubviews: [nameLabel, nicknameLabel, statementLabel])
         stack.axis = .vertical
         stack.distribution = .fillProportionally
@@ -74,7 +74,7 @@ final class ProfileViewController: UIViewController {
     
 //    MARK: - Constraints setter
     
-    private func setViewsCounstraints() {
+    private func setViewsConstraints() {
         
         // tAMIC off for all views
         [userpicImageView, exitButton, nameLabel, nicknameLabel, statementLabel, labelsStack].forEach {
@@ -101,7 +101,8 @@ final class ProfileViewController: UIViewController {
         // labelsStack constraints
         NSLayoutConstraint.activate([
             labelsStack.topAnchor.constraint(equalTo: userpicImageView.bottomAnchor, constant: 8),
-            labelsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+            labelsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            labelsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
 
     }

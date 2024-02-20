@@ -20,6 +20,7 @@ final class ImagesListCell: UITableViewCell {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
+        formatter.dateFormat = "dd MMMM yyyy"
         formatter.locale = Locale(identifier: "ru-RU")
         return formatter
     }()
@@ -34,7 +35,7 @@ final class ImagesListCell: UITableViewCell {
         cellPicture.clipsToBounds = true
         backgroundColor = .ypBlack
         dateLabel.text = dateFormatter.string(from: Date())
-        if indexPath.row%2 == 0 {
+        if indexPath.row % 2 == 0 {
             likeButton.setImage(.likeActive, for: [])
         } else {
             likeButton.setImage(.likeInactive, for: [])

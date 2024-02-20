@@ -23,7 +23,7 @@ final class ProfileExitButton: UIButton {
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        return bounds.insetBy(dx: -14, dy: -12).contains(point)
+        return bounds.insetBy(dx: -12, dy: -10).contains(point)
     }
     
 }

@@ -19,7 +19,6 @@ final class ImagesListViewController: UIViewController {
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private let showSingleImageSegueIdentifier: String = "ShowSingleImage"
     
-    
 //    MARK: - Lyfecycle
     
     override func viewDidLoad() {
