@@ -5,25 +5,19 @@
 //  Created by Dmitriy Menshikov on 1.02.24.
 //
 
+import Foundation
 import UIKit
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     
 //    MARK: - IBOutlets
     
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
 //    MARK: - private propeties
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        formatter.locale = Locale(identifier: "ru-RU")
-        return formatter
-    }()
+    private let showSingleImageSegueIdentifier: String = "ShowSingleImage"
     
 //    MARK: - Lyfecycle
     
@@ -41,24 +35,26 @@ class ImagesListViewController: UIViewController {
         tableView.backgroundColor = .ypBlack
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
-
     
-    private func configCell(for cell: ImagesListCell, with indexPath: IndexPath)  {
-        guard let picture: UIImage = UIImage(named: "\(indexPath.row)") else {
-            return
-        }
-        cell.cellPicture.image = picture
-        cell.cellPicture.contentMode = .scaleAspectFill
-        cell.cellPicture.layer.cornerRadius = 16
-        cell.cellPicture.clipsToBounds = true
-        cell.backgroundColor = .ypBlack
-        cell.dateLabel.text = dateFormatter.string(from: Date())
-        if indexPath.row%2 == 0 {
-            cell.likeButton.setImage(.likeActive, for: [])
+//    MARK: - Override methods
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == showSingleImageSegueIdentifier {
+            guard
+                let viewController = segue.destination as? SingleImageViewController,
+                let indexPath = sender as? IndexPath
+            else {
+                assertionFailure("Invalid segue destination")
+                return
+            }
+            guard let image = UIImage(named: photosName[indexPath.row]) else { return }
+            viewController.image = image
         } else {
-            cell.likeButton.setImage(.likeInactive, for: [])
+            super.prepare(for: segue, sender: sender)
         }
     }
+    
 }
 
 //     MARK: - UITableViewDelegate extension
@@ -67,7 +63,7 @@ extension ImagesListViewController: UITableViewDelegate {
     
     // метод, вызываемый при выделении строки таблицы
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -85,6 +81,7 @@ extension ImagesListViewController: UITableViewDelegate {
 }
 
 //     MARK: - UITableViewDataSource extension
+
 extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -92,14 +89,14 @@ extension ImagesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath) // 1
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
         
-        guard let imageListCell = cell as? ImagesListCell else { // 2
+        guard let imageListCell = cell as? ImagesListCell else {
             print ("Ошибка инициализации кастомной ячейки")
             return UITableViewCell()
         }
-        configCell(for: imageListCell, with: indexPath) // 3
-        return imageListCell // 4
+        imageListCell.configCell(with: indexPath)
+        return imageListCell
     }
     
 }
