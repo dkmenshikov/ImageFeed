@@ -10,6 +10,7 @@
 		328F17122B90E42700346011 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F17112B90E42700346011 /* Constants.swift */; };
 		328F17192B93D37C00346011 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F17182B93D37C00346011 /* AuthViewController.swift */; };
 		328F171B2B93D8D200346011 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F171A2B93D8D200346011 /* WebViewViewController.swift */; };
+		328F171D2B93E96100346011 /* WebViewViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F171C2B93E96100346011 /* WebViewViewControllerDelegate.swift */; };
 		3294D94F2B7FA88500776155 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3294D94E2B7FA88500776155 /* ProfileViewController.swift */; };
 		3294D9532B7FAF7B00776155 /* ProfileExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3294D9522B7FAF7B00776155 /* ProfileExitButton.swift */; };
 		3294D9562B80D52E00776155 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3294D9552B80D52E00776155 /* SingleImageViewController.swift */; };
@@ -28,6 +29,7 @@
 		328F17112B90E42700346011 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		328F17182B93D37C00346011 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		328F171A2B93D8D200346011 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
+		328F171C2B93E96100346011 /* WebViewViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerDelegate.swift; sourceTree = "<group>"; };
 		3294D94E2B7FA88500776155 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		3294D9522B7FAF7B00776155 /* ProfileExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileExitButton.swift; sourceTree = "<group>"; };
 		3294D9552B80D52E00776155 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			children = (
 				328F17182B93D37C00346011 /* AuthViewController.swift */,
 				328F171A2B93D8D200346011 /* WebViewViewController.swift */,
+				328F171C2B93E96100346011 /* WebViewViewControllerDelegate.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				32CAB9722B6BFB76001ADBA6 /* AppDelegate.swift in Sources */,
 				328F17122B90E42700346011 /* Constants.swift in Sources */,
 				3294D9532B7FAF7B00776155 /* ProfileExitButton.swift in Sources */,
+				328F171D2B93E96100346011 /* WebViewViewControllerDelegate.swift in Sources */,
 				3294D9562B80D52E00776155 /* SingleImageViewController.swift in Sources */,
 				3294D9582B814EEC00776155 /* BackwardButton.swift in Sources */,
 				328F171B2B93D8D200346011 /* WebViewViewController.swift in Sources */,
