@@ -15,6 +15,7 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
     }
     
     var delegate: WebViewViewControllerDelegate?
+    let o2AuthShared = OAuth2Service.shared
     
 //    MARK: - Private outlets
     
@@ -26,8 +27,9 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadAuthView()
-        
         webView.navigationDelegate = self
+        
+//        print (OAuth2Service.shared.createURL(code: "code")?.absoluteString ?? "???")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,6 +48,8 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
         )
     }
     
+//    MARK: - Override methods
+    
     override func observeValue(
         forKeyPath keyPath: String?,
         of object: Any?,
@@ -59,17 +63,28 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
         }
     }
     
+//    MARK: - Delegate methods
+    
     func webView(
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
-         if let code = code(from: navigationAction) { //1
-                //TODO: process code                     //2
-                decisionHandler(.cancel) //3
-          } else {
-                decisionHandler(.allow) //4
+        if let code = code(from: navigationAction) { //1
+                //TODO: process code  //2
+            print ("code: \(code)")
+            o2AuthShared.fetchOAuthToken(code: code) { result in
+                switch result {
+                case .success(let token):
+                    print ("token: \(token)")
+                case .failure(let error):
+                    print (error)
+                }
             }
+            decisionHandler(.cancel) //3
+        } else {
+            decisionHandler(.allow) //4
+        }
     }
     
 //    MARK: - Private methods

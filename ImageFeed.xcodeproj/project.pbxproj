@@ -11,6 +11,9 @@
 		328F17192B93D37C00346011 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F17182B93D37C00346011 /* AuthViewController.swift */; };
 		328F171B2B93D8D200346011 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F171A2B93D8D200346011 /* WebViewViewController.swift */; };
 		328F171D2B93E96100346011 /* WebViewViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F171C2B93E96100346011 /* WebViewViewControllerDelegate.swift */; };
+		328F17202B97A02700346011 /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F171F2B97A02700346011 /* OAuth2Service.swift */; };
+		328F17222B97BD3D00346011 /* URLSession+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F17212B97BD3D00346011 /* URLSession+data.swift */; };
+		328F17252B97C17700346011 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F17242B97C17700346011 /* OAuthTokenResponseBody.swift */; };
 		3294D94F2B7FA88500776155 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3294D94E2B7FA88500776155 /* ProfileViewController.swift */; };
 		3294D9532B7FAF7B00776155 /* ProfileExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3294D9522B7FAF7B00776155 /* ProfileExitButton.swift */; };
 		3294D9562B80D52E00776155 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3294D9552B80D52E00776155 /* SingleImageViewController.swift */; };
@@ -30,6 +33,9 @@
 		328F17182B93D37C00346011 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		328F171A2B93D8D200346011 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		328F171C2B93E96100346011 /* WebViewViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerDelegate.swift; sourceTree = "<group>"; };
+		328F171F2B97A02700346011 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
+		328F17212B97BD3D00346011 /* URLSession+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+data.swift"; sourceTree = "<group>"; };
+		328F17242B97C17700346011 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
 		3294D94E2B7FA88500776155 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		3294D9522B7FAF7B00776155 /* ProfileExitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileExitButton.swift; sourceTree = "<group>"; };
 		3294D9552B80D52E00776155 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +71,23 @@
 				328F171C2B93E96100346011 /* WebViewViewControllerDelegate.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		328F171E2B97A01400346011 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				328F171F2B97A02700346011 /* OAuth2Service.swift */,
+				328F17212B97BD3D00346011 /* URLSession+data.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		328F17232B97C15E00346011 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				328F17242B97C17700346011 /* OAuthTokenResponseBody.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		3294D9512B7FAF4800776155 /* ProfileScreen */ = {
@@ -106,6 +129,8 @@
 			children = (
 				32CAB9712B6BFB76001ADBA6 /* AppDelegate.swift */,
 				32CAB9732B6BFB76001ADBA6 /* SceneDelegate.swift */,
+				328F17232B97C15E00346011 /* Models */,
+				328F171E2B97A01400346011 /* Services */,
 				32CAB9A72B6D98E7001ADBA6 /* ImagesList */,
 				3294D9512B7FAF4800776155 /* ProfileScreen */,
 				3294D9542B80D50E00776155 /* SingleImageScreen */,
@@ -214,7 +239,10 @@
 				32CAB9A62B6D98A2001ADBA6 /* ImagesListCell.swift in Sources */,
 				32CAB9AA2B6E72E3001ADBA6 /* GradientView.swift in Sources */,
 				32CAB9722B6BFB76001ADBA6 /* AppDelegate.swift in Sources */,
+				328F17252B97C17700346011 /* OAuthTokenResponseBody.swift in Sources */,
+				328F17202B97A02700346011 /* OAuth2Service.swift in Sources */,
 				328F17122B90E42700346011 /* Constants.swift in Sources */,
+				328F17222B97BD3D00346011 /* URLSession+data.swift in Sources */,
 				3294D9532B7FAF7B00776155 /* ProfileExitButton.swift in Sources */,
 				328F171D2B93E96100346011 /* WebViewViewControllerDelegate.swift in Sources */,
 				3294D9562B80D52E00776155 /* SingleImageViewController.swift in Sources */,
