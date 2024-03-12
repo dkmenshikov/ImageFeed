@@ -31,7 +31,8 @@ struct NetworkClient {
                response.statusCode < 200 || response.statusCode >= 300 {
                 fulfillCompletionOnTheMainThread(.failure(NetworkError.httpStatusCode(response.statusCode)))
             } else {
-                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlSessionError))
+//                TODO: - РАЗОБРАТЬСЯ С ОБРАБОТКОЙ ОШИБКИ URLSessionError
+//                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlSessionError))
             }
             
             guard let data else { return }

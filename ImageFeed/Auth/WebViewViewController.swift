@@ -15,7 +15,6 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
     }
     
     var delegate: WebViewViewControllerDelegate?
-    let o2AuthShared = OAuth2Service.shared
     
 //    MARK: - Private outlets
     
@@ -28,8 +27,6 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         loadAuthView()
         webView.navigationDelegate = self
-        
-//        print (OAuth2Service.shared.createURL(code: "code")?.absoluteString ?? "???")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,15 +68,7 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
         if let code = code(from: navigationAction) {
-            o2AuthShared.fetchOAuthToken(code: code) { result in
-                switch result {
-                case .success(let token):
-                    let oAuthTokenStorage = OAuthTokenStorageService()
-                    oAuthTokenStorage.authToken = token
-                case .failure(let error):
-                    print (error)
-                }
-            }
+            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             decisionHandler(.cancel) //3
         } else {
             decisionHandler(.allow) //4

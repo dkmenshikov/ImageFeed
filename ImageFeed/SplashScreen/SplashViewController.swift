@@ -13,6 +13,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private let toTabBarSegueID = "toTabBarSegue"
     
     func didAuthenticate(_ vc: AuthViewController) {
+        vc.dismiss(animated: true)
         performSegue(withIdentifier: toTabBarSegueID, sender: nil)
     }
     
@@ -25,6 +26,21 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         } else {
             print("TOKEN HASN'T BEEN FOUND")
             performSegue(withIdentifier: toAuthSegueID, sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == toAuthSegueID {
+            guard
+                let navigationController = segue.destination as? UINavigationController,
+                let viewController = navigationController.viewControllers[0] as? AuthViewController
+            else {
+                assertionFailure("Failed to prepare for \(toAuthSegueID)")
+                return
+            }
+            viewController.delegate = self
+        } else {
+            super.prepare(for: segue, sender: sender)
         }
     }
 }

@@ -25,7 +25,7 @@ final class OAuth2Service {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let oAuthTokenResponse = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    print(oAuthTokenResponse)
+//                    print(oAuthTokenResponse)
                     handler(.success(oAuthTokenResponse.accessToken))
                 } catch {
                     handler(.failure(error))
@@ -52,7 +52,7 @@ final class OAuth2Service {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        print(request)
+//        print(request)
         return request
     }
 }

@@ -13,8 +13,27 @@ protocol AuthViewControllerDelegate: AnyObject {
 
 final class AuthViewController: UIViewController, WebViewViewControllerDelegate {
     
+    let o2AuthShared = OAuth2Service.shared
+    var delegate: AuthViewControllerDelegate?
+    
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        vc.dismiss(animated: true)
+        vc.dismiss(animated: true) {
+            print ("DISMISSED")
+        }
+        o2AuthShared.fetchOAuthToken(code: code) { result in
+            switch result {
+            case .success(let token):
+                let oAuthTokenStorage = OAuthTokenStorageService()
+                oAuthTokenStorage.authToken = token
+                print(token)
+            case .failure(let error):
+                print (error)
+            }
+        }
+    }
+    
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
+        dismiss(animated: true)
     }
     
     override func viewDidLoad() {
