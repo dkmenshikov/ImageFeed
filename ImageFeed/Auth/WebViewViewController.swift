@@ -81,6 +81,7 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
                     print (error)
                 }
             }
+
             decisionHandler(.cancel) //3
         } else {
             decisionHandler(.allow) //4

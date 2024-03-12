@@ -11,16 +11,21 @@ final class OAuth2Service {
     static let shared = OAuth2Service()
     private init() {}
     
+    private let networkClient = NetworkClient()
+    
     func fetchOAuthToken(code: String, handler: @escaping (Result<String, Error>) -> Void) {
         guard let request = createOAuthTokenURLRequest(code: code) else {
             assertionFailure("nil Request")
             return
         }
-        let task = URLSession.shared.data(for: request) { result in
+        networkClient.fetch(request: request) { result in
             switch result {
             case .success(let data):
                 do {
-                    let oAuthTokenResponse = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let oAuthTokenResponse = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                    print(oAuthTokenResponse)
                     handler(.success(oAuthTokenResponse.accessToken))
                 } catch {
                     handler(.failure(error))
@@ -29,7 +34,6 @@ final class OAuth2Service {
                 handler(.failure(error))
             }
         }
-        task.resume()
     }
     
     private func createOAuthTokenURLRequest(code: String?) -> URLRequest? {
@@ -48,7 +52,7 @@ final class OAuth2Service {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        print(url.absoluteString)
+        print(request)
         return request
     }
 }

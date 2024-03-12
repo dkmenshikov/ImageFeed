@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		327566222B9FEF9300131155 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327566212B9FEF9300131155 /* NetworkClient.swift */; };
 		328F17122B90E42700346011 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F17112B90E42700346011 /* Constants.swift */; };
 		328F17192B93D37C00346011 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F17182B93D37C00346011 /* AuthViewController.swift */; };
 		328F171B2B93D8D200346011 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F171A2B93D8D200346011 /* WebViewViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		327566212B9FEF9300131155 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		328F17112B90E42700346011 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		328F17182B93D37C00346011 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		328F171A2B93D8D200346011 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			children = (
 				328F171F2B97A02700346011 /* OAuth2Service.swift */,
 				328F17212B97BD3D00346011 /* URLSession+data.swift */,
+				327566212B9FEF9300131155 /* NetworkClient.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				32CAB9722B6BFB76001ADBA6 /* AppDelegate.swift in Sources */,
 				328F17252B97C17700346011 /* OAuthTokenResponseBody.swift in Sources */,
 				328F17202B97A02700346011 /* OAuth2Service.swift in Sources */,
+				327566222B9FEF9300131155 /* NetworkClient.swift in Sources */,
 				328F17122B90E42700346011 /* Constants.swift in Sources */,
 				328F17222B97BD3D00346011 /* URLSession+data.swift in Sources */,
 				3294D9532B7FAF7B00776155 /* ProfileExitButton.swift in Sources */,
