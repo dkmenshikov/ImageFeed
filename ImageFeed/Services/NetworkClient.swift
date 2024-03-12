@@ -37,7 +37,6 @@ struct NetworkClient {
             guard let data else { return }
             fulfillCompletionOnTheMainThread(.success(data))
         }
-        print(task)
         task.resume()
     }
     
