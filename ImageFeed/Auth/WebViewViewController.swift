@@ -70,18 +70,16 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
-        if let code = code(from: navigationAction) { //1
-                //TODO: process code  //2
-            print ("code: \(code)")
+        if let code = code(from: navigationAction) {
             o2AuthShared.fetchOAuthToken(code: code) { result in
                 switch result {
                 case .success(let token):
-                    print ("token: \(token)")
+                    let oAuthTokenStorage = OAuthTokenStorageService()
+                    oAuthTokenStorage.authToken = token
                 case .failure(let error):
                     print (error)
                 }
             }
-
             decisionHandler(.cancel) //3
         } else {
             decisionHandler(.allow) //4

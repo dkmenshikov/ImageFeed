@@ -7,10 +7,14 @@
 
 import UIKit
 
+protocol AuthViewControllerDelegate: AnyObject {
+    func didAuthenticate(_ vc: AuthViewController)
+} 
+
 final class AuthViewController: UIViewController, WebViewViewControllerDelegate {
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        
+        vc.dismiss(animated: true)
     }
     
     override func viewDidLoad() {
