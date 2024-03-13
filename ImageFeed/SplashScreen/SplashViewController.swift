@@ -13,7 +13,8 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private let toTabBarSegueID = "toTabBarSegue"
     
     func didAuthenticate(_ vc: AuthViewController) {
-        vc.dismiss(animated: true)
+        vc.navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
         performSegue(withIdentifier: toTabBarSegueID, sender: nil)
     }
     

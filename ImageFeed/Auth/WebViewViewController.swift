@@ -36,6 +36,7 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
             options: .new,
             context: nil
         )
+        super.viewWillAppear(animated)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -43,6 +44,7 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
             self,
             forKeyPath: #keyPath(WKWebView.estimatedProgress)
         )
+        super.viewDidDisappear(animated)
     }
     
 //    MARK: - Override methods
@@ -84,20 +86,19 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
     
     private func code(from navigationAction: WKNavigationAction) -> String? {
         if
-            let url = navigationAction.request.url,                         //1
-            let urlComponents = URLComponents(string: url.absoluteString),  //2
-            urlComponents.path == "/oauth/authorize/native",                //3
-            let items = urlComponents.queryItems,                           //4
-            let codeItem = items.first(where: { $0.name == "code" })        //5
+            let url = navigationAction.request.url,
+            let urlComponents = URLComponents(string: url.absoluteString),
+            urlComponents.path == "/oauth/authorize/native",
+            let items = urlComponents.queryItems,
+            let codeItem = items.first(where: { $0.name == "code" })
         {
-            return codeItem.value                                           //6
+            return codeItem.value
         } else {
             return nil
         }
     }
     
     private func loadAuthView() {
-        
         guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
             assertionFailure("Invalid Auth URL")
             return
@@ -114,7 +115,5 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
         }
         let request = URLRequest(url: url)
         webView.load(request)
-        
     }
-    
 }

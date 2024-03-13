@@ -7,33 +7,26 @@
 
 import UIKit
 
-protocol AuthViewControllerDelegate: AnyObject {
-    func didAuthenticate(_ vc: AuthViewController)
-} 
-
 final class AuthViewController: UIViewController, WebViewViewControllerDelegate {
     
     let o2AuthShared = OAuth2Service.shared
     var delegate: AuthViewControllerDelegate?
     
+    private let segueID = "ShowWebView"
+    
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        vc.dismiss(animated: true) {
-            print ("DISMISSED")
-        }
-        o2AuthShared.fetchOAuthToken(code: code) { result in
+        o2AuthShared.fetchOAuthToken(code: code) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let token):
                 let oAuthTokenStorage = OAuthTokenStorageService()
                 oAuthTokenStorage.authToken = token
                 print(token)
+                self.delegate?.didAuthenticate(self)
             case .failure(let error):
                 print (error)
             }
         }
-    }
-    
-    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
-        dismiss(animated: true)
     }
     
     override func viewDidLoad() {
@@ -53,8 +46,6 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
             super.prepare(for: segue, sender: sender)
         }
     }
-    
-    private let segueID = "ShowWebView"
     
     private func configureBackButton() {
         navigationController?.navigationBar.backIndicatorImage = UIImage.blackBackwardButton
