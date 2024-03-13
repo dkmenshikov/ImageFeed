@@ -14,7 +14,7 @@ final class ImagesListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-//    MARK: - private propeties
+//    MARK: - Private propeties
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private let showSingleImageSegueIdentifier: String = "ShowSingleImage"
@@ -61,7 +61,6 @@ final class ImagesListViewController: UIViewController {
 
 extension ImagesListViewController: UITableViewDelegate {
     
-    // метод, вызываемый при выделении строки таблицы
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
