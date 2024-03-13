@@ -10,9 +10,9 @@ import WebKit
 
 final class WebViewViewController: UIViewController, WKNavigationDelegate {
     
-    enum WebViewConstants {
-        static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
-    }
+//    enum WebViewConstants {
+//        static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
+//    }
     
     var delegate: WebViewViewControllerDelegate?
     
@@ -99,15 +99,15 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
     }
     
     private func loadAuthView() {
-        guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
+        guard var urlComponents = URLComponents(string: WebConstants.unsplashAuthorizeURLString) else {
             assertionFailure("Invalid Auth URL")
             return
         }
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+            URLQueryItem(name: "client_id", value: WebConstants.accessKey),
+            URLQueryItem(name: "redirect_uri", value: WebConstants.redirectURI),
             URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.accessScope)
+            URLQueryItem(name: "scope", value: WebConstants.accessScope)
          ]
         guard let url = urlComponents.url else {
             assertionFailure("Invalid Query Items")

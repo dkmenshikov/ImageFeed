@@ -8,10 +8,17 @@
 import UIKit
 
 final class OAuth2Service {
+    
+//    MARK: - Shared instance of singleton
+    
     static let shared = OAuth2Service()
     private init() {}
     
+//    MARK: - Private properties
+    
     private let networkClient = NetworkClient()
+    
+//    MARK: - Public methods
     
     func fetchOAuthToken(code: String, handler: @escaping (Result<String, Error>) -> Void) {
         guard let request = createOAuthTokenURLRequest(code: code) else {
@@ -25,7 +32,6 @@ final class OAuth2Service {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let oAuthTokenResponse = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-//                    print(oAuthTokenResponse)
                     handler(.success(oAuthTokenResponse.accessToken))
                 } catch {
                     handler(.failure(error))
@@ -36,23 +42,24 @@ final class OAuth2Service {
         }
     }
     
+//    MARK: - Private methods
+    
     private func createOAuthTokenURLRequest(code: String?) -> URLRequest? {
         var urlComponents = URLComponents()
-        urlComponents.path = Constants.authPath
+        urlComponents.path = WebConstants.authPath
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "client_secret", value: Constants.secretKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+            URLQueryItem(name: "client_id", value: WebConstants.accessKey),
+            URLQueryItem(name: "client_secret", value: WebConstants.secretKey),
+            URLQueryItem(name: "redirect_uri", value: WebConstants.redirectURI),
             URLQueryItem(name: "code", value: code),
             URLQueryItem(name: "grant_type", value: "authorization_code"),
         ]
-        guard let url = urlComponents.url(relativeTo: Constants.defaultBaseURL) else {
+        guard let url = urlComponents.url(relativeTo: WebConstants.defaultBaseURL) else {
             assertionFailure("Unable to create URL")
             return nil
         }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-//        print(request)
         return request
     }
 }

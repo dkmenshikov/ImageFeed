@@ -8,11 +8,20 @@
 import UIKit
 
 final class AuthViewController: UIViewController, WebViewViewControllerDelegate {
+
+//    MARK: - Delegate properties
     
-    let o2AuthShared = OAuth2Service.shared
     var delegate: AuthViewControllerDelegate?
     
+//    MARK: - Sinletones shared instances
+    
+    private let o2AuthShared = OAuth2Service.shared
+    
+//    MARK: - Private properties
+    
     private let segueID = "ShowWebView"
+    
+//    MARK: - Public methods
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         o2AuthShared.fetchOAuthToken(code: code) { [weak self] result in
@@ -29,10 +38,14 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         }
     }
     
+//    MARK: - Lyfecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBackButton()
     }
+    
+//    MARK: - Override methods
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueID {
@@ -46,6 +59,8 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
             super.prepare(for: segue, sender: sender)
         }
     }
+    
+//    MARK: - Private methods
     
     private func configureBackButton() {
         navigationController?.navigationBar.backIndicatorImage = UIImage.blackBackwardButton

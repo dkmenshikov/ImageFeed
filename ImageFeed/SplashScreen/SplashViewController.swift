@@ -9,8 +9,12 @@ import UIKit
 
 final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     
+//    MARK: - Private properties
+    
     private let toAuthSegueID = "toAuthSegue"
     private let toTabBarSegueID = "toTabBarSegue"
+    
+//    MARK: - Public methods
     
     func didAuthenticate(_ vc: AuthViewController) {
         vc.navigationController?.popViewController(animated: true)
@@ -18,17 +22,19 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         performSegue(withIdentifier: toTabBarSegueID, sender: nil)
     }
     
+//    MARK: - Lyfecycle
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let oAuthTokenStorage = OAuthTokenStorageService()
-        if let token = oAuthTokenStorage.authToken {
-            print("FOUND TOKEN \(token)")
+        if oAuthTokenStorage.authToken != nil {
             performSegue(withIdentifier: toTabBarSegueID, sender: nil)
         } else {
-            print("TOKEN HASN'T BEEN FOUND")
             performSegue(withIdentifier: toAuthSegueID, sender: nil)
         }
     }
+    
+//    MARK: - Override methods
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == toAuthSegueID {

@@ -9,7 +9,7 @@ import Foundation
 
 struct NetworkClient {
     
-    enum NetworkError: Error {
+    private enum NetworkError: Error {
         case httpStatusCode(Int)
         case urlRequestError(Error)
         case urlSessionError
@@ -26,19 +26,18 @@ struct NetworkClient {
                 fulfillCompletionOnTheMainThread(.failure(NetworkError.urlRequestError(error)))
                 return
             }
-            
-            if let response = response as? HTTPURLResponse,
-               response.statusCode < 200 || response.statusCode >= 300 {
-                fulfillCompletionOnTheMainThread(.failure(NetworkError.httpStatusCode(response.statusCode)))
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode < 200 || response.statusCode >= 300 {
+                    fulfillCompletionOnTheMainThread(.failure(NetworkError.httpStatusCode(response.statusCode)))
+                    return
+                }
             } else {
-//                TODO: - РАЗОБРАТЬСЯ С ОБРАБОТКОЙ ОШИБКИ URLSessionError
-//                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlSessionError))
+                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlSessionError))
+                return
             }
-            
             guard let data else { return }
             fulfillCompletionOnTheMainThread(.success(data))
         }
         task.resume()
     }
-    
 }
