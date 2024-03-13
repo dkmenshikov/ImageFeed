@@ -40,9 +40,20 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     
 //    MARK: - Lyfecycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBackButton()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
 //    MARK: - Override methods
@@ -63,6 +74,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
 //    MARK: - Private methods
     
     private func configureBackButton() {
+        navigationController?.navigationBar.backgroundColor = UIColor.ypWhite
         navigationController?.navigationBar.backIndicatorImage = UIImage.blackBackwardButton
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage.blackBackwardButton
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)

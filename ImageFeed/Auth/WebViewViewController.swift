@@ -10,9 +10,7 @@ import WebKit
 
 final class WebViewViewController: UIViewController, WKNavigationDelegate {
     
-//    enum WebViewConstants {
-//        static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
-//    }
+//    MARK: - Delegate properties
     
     var delegate: WebViewViewControllerDelegate?
     
@@ -27,6 +25,8 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         loadAuthView()
         webView.navigationDelegate = self
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {

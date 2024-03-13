@@ -149,7 +149,7 @@
                             </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DDF-B1-Cst"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="YP White"/>
                         <constraints>
                             <constraint firstItem="de7-4D-boq" firstAttribute="bottom" secondItem="YYa-sH-v5h" secondAttribute="bottom" id="3Jw-k5-lOg"/>
                             <constraint firstItem="de7-4D-boq" firstAttribute="top" secondItem="DDF-B1-Cst" secondAttribute="top" id="azi-OZ-SjR"/>
