@@ -8,11 +8,11 @@
 import UIKit
 import WebKit
 
-final class WebViewViewController: UIViewController, WKNavigationDelegate {
+final class WebViewViewController: UIViewController {
     
 //    MARK: - Delegate properties
     
-    var delegate: WebViewViewControllerDelegate?
+    weak var delegate: WebViewViewControllerDelegate?
     
 //    MARK: - Private outlets
     
@@ -61,22 +61,7 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
-    
-//    MARK: - Delegate methods
-    
-    func webView(
-        _ webView: WKWebView,
-        decidePolicyFor navigationAction: WKNavigationAction,
-        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
-    ) {
-        if let code = code(from: navigationAction) {
-            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
-            decisionHandler(.cancel) //3
-        } else {
-            decisionHandler(.allow) //4
-        }
-    }
-    
+
 //    MARK: - Private methods
     
     private func updateProgress() {
@@ -115,5 +100,22 @@ final class WebViewViewController: UIViewController, WKNavigationDelegate {
         }
         let request = URLRequest(url: url)
         webView.load(request)
+    }
+}
+
+//  MARK: - WKNavigationDelegate
+
+extension WebViewViewController: WKNavigationDelegate {
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
+    ) {
+        if let code = code(from: navigationAction) {
+            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
+            decisionHandler(.cancel) //3
+        } else {
+            decisionHandler(.allow) //4
+        }
     }
 }

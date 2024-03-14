@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class AuthViewController: UIViewController, WebViewViewControllerDelegate {
+final class AuthViewController: UIViewController {
 
 //    MARK: - Delegate properties
     
-    var delegate: AuthViewControllerDelegate?
+    weak var delegate: AuthViewControllerDelegate?
     
 //    MARK: - Sinletones shared instances
     
@@ -20,23 +20,6 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
 //    MARK: - Private properties
     
     private let segueID = "ShowWebView"
-    
-//    MARK: - Public methods
-    
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        o2AuthShared.fetchOAuthToken(code: code) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let token):
-                let oAuthTokenStorage = OAuthTokenStorageService()
-                oAuthTokenStorage.authToken = token
-                print(token)
-                self.delegate?.didAuthenticate(self)
-            case .failure(let error):
-                print (error)
-            }
-        }
-    }
     
 //    MARK: - Lyfecycle
     
@@ -79,5 +62,24 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage.blackBackwardButton
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = UIColor.ypBlack
+    }
+}
+
+// MARK: - WebViewViewControllerDelegate
+
+extension AuthViewController: WebViewViewControllerDelegate {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+        o2AuthShared.fetchOAuthToken(code: code) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let token):
+                let oAuthTokenStorage = OAuthTokenStorageService()
+                oAuthTokenStorage.authToken = token
+                print(token)
+                self.delegate?.didAuthenticate(self)
+            case .failure(let error):
+                print (error)
+            }
+        }
     }
 }
