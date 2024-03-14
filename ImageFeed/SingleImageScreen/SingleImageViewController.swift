@@ -49,7 +49,6 @@ final class SingleImageViewController: UIViewController {
     @IBAction private func didTapSharingButton(_ sender: Any) {
         let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         self.present(activityVC, animated: true)
-//        Уважаемый ревьюер, я буду очень благодарен, если вы объясните, как решить проблему с ошибками и фризом при первом показе UIActivityViewController. Как я понял из ошибок, они как-то связаны с тем, что он не может считать локаль (и, кстати, отображается на английском языке). Как исправить эту проблему гугл мне ответить не смог
     }
     
 //    MARK: - Private methods
