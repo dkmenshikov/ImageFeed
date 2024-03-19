@@ -7,16 +7,23 @@
 
 import UIKit
 
-final class OAuth2Service {
+final class OAuth2Service: NetworkClientDelegate {
     
 //    MARK: - Shared instance of singleton
     
     static let shared = OAuth2Service()
-    private init() {}
+    private init() {
+        networkClient.delegate = self
+    }
+    
+//    MARK: - Public properties
+    
+    var isFetchingNow: Bool = false
     
 //    MARK: - Private properties
     
-    private let networkClient = NetworkClient()
+    private var networkClient = NetworkClient()
+    private var lastCode: String?
     
 //    MARK: - Public methods
     
@@ -25,21 +32,27 @@ final class OAuth2Service {
             assertionFailure("nil Request")
             return
         }
-        networkClient.fetch(request: request) { result in
-            switch result {
-            case .success(let data):
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let oAuthTokenResponse = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    handler(.success(oAuthTokenResponse.accessToken))
-                } catch {
+        assert(Thread.isMainThread)
+        if !isFetchingNow || lastCode != code {
+            networkClient.fetch(request: request) { result in
+                switch result {
+                case .success(let data):
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        let oAuthTokenResponse = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                        handler(.success(oAuthTokenResponse.accessToken))
+                    } catch {
+                        handler(.failure(error))
+                    }
+                case .failure(let error):
                     handler(.failure(error))
                 }
-            case .failure(let error):
-                handler(.failure(error))
             }
+        } else {
+            print ("Second fetch with the same code")
         }
+        lastCode = code
     }
     
 //    MARK: - Private methods
