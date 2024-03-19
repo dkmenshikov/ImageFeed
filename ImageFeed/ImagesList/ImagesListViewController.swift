@@ -24,6 +24,15 @@ final class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setTableView()
+        ProfileService.shared.fetchProfileData { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let profileData):
+                print(profileData)
+            case .failure(let error):
+                print (error)
+            }
+        }
     }
     
 //    MARK: - Private methods
