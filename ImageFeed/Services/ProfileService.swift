@@ -22,7 +22,11 @@ final class ProfileService {
     
     //    MARK: - Public methods
     
-    func fetchProfileData(handler: @escaping (Result<ProfileResponseBody, Error>) -> Void) {
+    
+//    TODO: - добавить делегата на определение выполняющегося запроса, чтобы избежать гонки данных
+    
+    
+    func fetchProfileData(handler: @escaping (Result<ProfileData, Error>) -> Void) {
         guard let authToken = tokenStorageService.authToken else { return }
         guard let request = createProfileRequest(token: authToken) else {
             assertionFailure("nil Request")
@@ -36,7 +40,10 @@ final class ProfileService {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let profileResponse = try decoder.decode(ProfileResponseBody.self, from: data)
-                    handler(.success(profileResponse))
+                    let profileData = ProfileData(username: "@"+profileResponse.username,
+                                                  name: profileResponse.name,
+                                                  bio: profileResponse.bio ?? "no bio")
+                    handler(.success(profileData))
                 } catch {
                     handler(.failure(error))
                 }

@@ -10,21 +10,43 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-//    MARK: - Private properties (screen views)
+    //    MARK: - Private properties (screen views)
     
     private var nameLabel = UILabel()
     private var nicknameLabel = UILabel()
-    private var statementLabel = UILabel()
+    private var bioLabel = UILabel()
     private var labelsStack = UIStackView()
     
     private var userpicImageView = UIImageView()
     private var exitButton = ProfileExitButton()
     
-//    MARK: - Lyfecycle
+    //    MARK: - Lyfecycle
     
     override func viewDidLoad() {
         setViews()
+        fetchProfileData()
     }
+    
+    private func fetchProfileData () {
+        let profileService = ProfileService.shared
+        profileService.fetchProfileData { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let profileData):
+                self.nameLabel.text = profileData.name
+                self.nicknameLabel.text = profileData.username
+                self.bioLabel.text = profileData.bio
+            case .failure(let error):
+                print (error)
+            }
+        }
+    }
+    
+}
+
+// MARK: - First time UI setter
+
+extension ProfileViewController {
     
 //    MARK: - Views creation private methods
     
@@ -35,8 +57,8 @@ final class ProfileViewController: UIViewController {
         exitButton = createExitButton()
         nameLabel = createLabel(text: "Name Lastname", textSize: 23, textColor: .ypWhite)
         nicknameLabel = createLabel(text: "@nickname", textSize: 13, textColor: .ypGray)
-        statementLabel = createLabel(text: "statement", textSize: 13, textColor: .ypWhite)
-        labelsStack = createStackView (nameLabel: nameLabel, nicknameLabel: nicknameLabel, statementLabel: statementLabel)
+        bioLabel = createLabel(text: "statement", textSize: 13, textColor: .ypWhite)
+        labelsStack = createStackView (nameLabel: nameLabel, nicknameLabel: nicknameLabel, statementLabel: bioLabel)
         
         [userpicImageView, exitButton, labelsStack].forEach {
             view.addSubview($0)
@@ -77,7 +99,7 @@ final class ProfileViewController: UIViewController {
     private func setViewsConstraints() {
         
         // tAMIC off for all views
-        [userpicImageView, exitButton, nameLabel, nicknameLabel, statementLabel, labelsStack].forEach {
+        [userpicImageView, exitButton, nameLabel, nicknameLabel, bioLabel, labelsStack].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -94,7 +116,7 @@ final class ProfileViewController: UIViewController {
         ])
         
         // labels constraints
-        [nameLabel, nicknameLabel, statementLabel].forEach {
+        [nameLabel, nicknameLabel, bioLabel].forEach {
             $0.heightAnchor.constraint(equalToConstant: 18).isActive = true
         }
         

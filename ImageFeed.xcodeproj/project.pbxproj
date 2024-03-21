@@ -16,6 +16,7 @@
 		327566332BAA2E3700131155 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327566322BAA2E3700131155 /* UIBlockingProgressHUD.swift */; };
 		327566352BAA333000131155 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327566342BAA333000131155 /* ProfileService.swift */; };
 		327566372BAA33C200131155 /* ProfileResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327566362BAA33C200131155 /* ProfileResponseBody.swift */; };
+		327566392BAC887500131155 /* ProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327566382BAC887500131155 /* ProfileData.swift */; };
 		328F17122B90E42700346011 /* WebConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F17112B90E42700346011 /* WebConstants.swift */; };
 		328F17192B93D37C00346011 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F17182B93D37C00346011 /* AuthViewController.swift */; };
 		328F171B2B93D8D200346011 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F171A2B93D8D200346011 /* WebViewViewController.swift */; };
@@ -45,6 +46,7 @@
 		327566322BAA2E3700131155 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		327566342BAA333000131155 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		327566362BAA33C200131155 /* ProfileResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponseBody.swift; sourceTree = "<group>"; };
+		327566382BAC887500131155 /* ProfileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileData.swift; sourceTree = "<group>"; };
 		328F17112B90E42700346011 /* WebConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebConstants.swift; sourceTree = "<group>"; };
 		328F17182B93D37C00346011 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		328F171A2B93D8D200346011 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			children = (
 				328F17242B97C17700346011 /* OAuthTokenResponseBody.swift */,
 				327566362BAA33C200131155 /* ProfileResponseBody.swift */,
+				327566382BAC887500131155 /* ProfileData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				32CAB9742B6BFB76001ADBA6 /* SceneDelegate.swift in Sources */,
 				327566332BAA2E3700131155 /* UIBlockingProgressHUD.swift in Sources */,
 				327566352BAA333000131155 /* ProfileService.swift in Sources */,
+				327566392BAC887500131155 /* ProfileData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
