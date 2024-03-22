@@ -33,7 +33,7 @@ final class ProfileViewController: UIViewController {
         let profileService = ProfileService.shared
         let profileData = profileService.profile
         nameLabel.text = profileData.name
-        nicknameLabel.text = profileData.username
+        nicknameLabel.text = "@"+profileData.username
         bioLabel.text = profileData.bio
     }
     

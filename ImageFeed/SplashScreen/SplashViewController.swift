@@ -28,6 +28,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         super.viewDidAppear(animated)
         let oAuthTokenStorage = OAuthTokenStorageService()
         if oAuthTokenStorage.authToken != nil {
+            print("TOKEN: ", String(oAuthTokenStorage.authToken ?? ""))
             prepareProfileData()
         } else {
             performSegue(withIdentifier: toAuthSegueID, sender: nil)
@@ -60,10 +61,23 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
             switch result {
             case .success(let profileData):
                 print(profileData)
+                fetchProfileImageURL(username: profileData.username)
                 performSegue(withIdentifier: toTabBarSegueID, sender: nil)
             case .failure(let error):
                 print (error)
                 performSegue(withIdentifier: toTabBarSegueID, sender: nil)
+            }
+        }
+    }
+    
+    private func fetchProfileImageURL(username: String) {
+        let profileImageService = ProfileImageService.shared
+        profileImageService.fetchProfileData(username: username) { result in
+            switch result {
+            case .success(let profileURL):
+                print("Profile URL:", profileURL)
+            case .failure(let error):
+                print(error)
             }
         }
     }

@@ -18,7 +18,11 @@ final class OAuth2Service: NetworkClientDelegate {
     
 //    MARK: - Public properties
     
-    var isFetchingNow: Bool = false
+    var isFetchingNow: Bool = false {
+        didSet {
+            print("fetching token:", isFetchingNow ? "START" : "DONE")
+        }
+    }
     
 //    MARK: - Private properties
     
@@ -41,6 +45,7 @@ final class OAuth2Service: NetworkClientDelegate {
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase
                         let oAuthTokenResponse = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                        print("TOKEN: ", oAuthTokenResponse.accessToken)
                         handler(.success(oAuthTokenResponse.accessToken))
                     } catch {
                         handler(.failure(error))

@@ -1,17 +1,17 @@
 //
-//  ProfileService.swift
+//  ProfileImageService.swift
 //  ImageFeed
 //
-//  Created by Dmitriy Menshikov on 19.03.24.
+//  Created by Dmitriy Menshikov on 22.03.24.
 //
 
 import Foundation
 
-final class ProfileService: NetworkClientDelegate {
+final class ProfileImageService: NetworkClientDelegate {
     
     //    MARK: - Shared instance of singleton
     
-    static let shared = ProfileService()
+    static let shared = ProfileImageService()
     private init() {
         networkClient.delegate = self
     }
@@ -20,11 +20,11 @@ final class ProfileService: NetworkClientDelegate {
     
     var isFetchingNow: Bool = false {
         didSet {
-            print("fetching profile data:", isFetchingNow ? "START" : "DONE")
+            print("fetching profile image URL:", isFetchingNow ? "START" : "DONE")
         }
     }
     
-    private(set) var profile = ProfileData(username: "", name: "", bio: "")
+    private(set) var profileImageURL: String?
     
     //    MARK: - Private properties
     
@@ -33,9 +33,9 @@ final class ProfileService: NetworkClientDelegate {
     
     //    MARK: - Public methods
     
-    func fetchProfileData(handler: @escaping (Result<ProfileData, Error>) -> Void) {
+    func fetchProfileData(username: String, handler: @escaping (Result<String, Error>) -> Void) {
         guard let authToken = tokenStorageService.authToken else { return }
-        guard let request = createProfileRequest(token: authToken) else {
+        guard let request = createProfileRequest(token: authToken, username: username) else {
             assertionFailure("nil Request")
             return
         }
@@ -47,14 +47,12 @@ final class ProfileService: NetworkClientDelegate {
                     do {
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let profileResponse = try decoder.decode(ProfileResponseBody.self, from: data)
-                        let profileData = ProfileData(username: profileResponse.username,
-                                                      name: profileResponse.name,
-                                                      bio: profileResponse.bio ?? "")
-                        self.profile = ProfileData(username: profileResponse.username,
-                                              name: profileResponse.name,
-                                              bio: profileResponse.bio ?? "")
-                        handler(.success(profileData))
+                        let profileImageURLResponse = try decoder.decode(ProfileImageURL.self, from: data)
+                        guard let profileImageURL = profileImageURLResponse.profileImage.small else {
+                            print ("no URL in response")
+                            return
+                        }
+                        handler(.success(profileImageURL))
                     } catch {
                         handler(.failure(error))
                     }
@@ -67,9 +65,9 @@ final class ProfileService: NetworkClientDelegate {
     
     //    MARK: - Private methods
     
-    private func createProfileRequest(token: String) -> URLRequest? {
+    private func createProfileRequest(token: String, username: String) -> URLRequest? {
         var urlComponents = URLComponents()
-        urlComponents.path = WebConstants.mePath
+        urlComponents.path = WebConstants.publicUserInfoPath + username
         guard let url = urlComponents.url(relativeTo: WebConstants.apiURL) else {
             assertionFailure("Unable to create URL")
             return nil

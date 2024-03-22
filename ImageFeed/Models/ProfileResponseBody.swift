@@ -10,7 +10,5 @@ import Foundation
 struct ProfileResponseBody: Decodable {
     let username: String
     let name: String
-    let firstName: String
-    let lastName: String
     let bio: String?
 }
