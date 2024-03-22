@@ -19,7 +19,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
         vc.navigationController?.popViewController(animated: true)
         dismiss(animated: true)
-        performSegue(withIdentifier: toTabBarSegueID, sender: nil)
+        prepareProfileData()
     }
     
 //    MARK: - Lyfecycle
@@ -28,7 +28,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         super.viewDidAppear(animated)
         let oAuthTokenStorage = OAuthTokenStorageService()
         if oAuthTokenStorage.authToken != nil {
-            performSegue(withIdentifier: toTabBarSegueID, sender: nil)
+            prepareProfileData()
         } else {
             performSegue(withIdentifier: toAuthSegueID, sender: nil)
         }
@@ -48,6 +48,23 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
             viewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
+        }
+    }
+    
+//    MARK: - Private methods
+    
+    private func prepareProfileData() {
+        let profileService = ProfileService.shared
+        profileService.fetchProfileData { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let profileData):
+                print(profileData)
+                performSegue(withIdentifier: toTabBarSegueID, sender: nil)
+            case .failure(let error):
+                print (error)
+                performSegue(withIdentifier: toTabBarSegueID, sender: nil)
+            }
         }
     }
 }

@@ -24,22 +24,17 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         setViews()
-        fetchProfileData()
+        updateProfileData()
     }
     
-    private func fetchProfileData () {
+//    MARK: - Private methods
+    
+    private func updateProfileData() {
         let profileService = ProfileService.shared
-        profileService.fetchProfileData { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let profileData):
-                self.nameLabel.text = profileData.name
-                self.nicknameLabel.text = profileData.username
-                self.bioLabel.text = profileData.bio
-            case .failure(let error):
-                print (error)
-            }
-        }
+        let profileData = profileService.profile
+        nameLabel.text = profileData.name
+        nicknameLabel.text = profileData.username
+        bioLabel.text = profileData.bio
     }
     
 }

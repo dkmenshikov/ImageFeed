@@ -7,24 +7,31 @@
 
 import Foundation
 
-final class ProfileService {
+final class ProfileService: NetworkClientDelegate {
     
     //    MARK: - Shared instance of singleton
     
     static let shared = ProfileService()
     private init() {
-        //        networkClient.delegate = self
+        networkClient.delegate = self
     }
+    
+//    MARK: - Public properties
+    
+    var isFetchingNow: Bool = false {
+        didSet {
+            print("fetching profile:", isFetchingNow ? "START" : "DONE")
+        }
+    }
+    
+    private(set) var profile = ProfileData(username: "", name: "", bio: "")
+    
     //    MARK: - Private properties
     
     private var networkClient = NetworkClient()
     private var tokenStorageService = OAuthTokenStorageService()
     
     //    MARK: - Public methods
-    
-    
-//    TODO: - добавить делегата на определение выполняющегося запроса, чтобы избежать гонки данных
-    
     
     func fetchProfileData(handler: @escaping (Result<ProfileData, Error>) -> Void) {
         guard let authToken = tokenStorageService.authToken else { return }
@@ -33,22 +40,27 @@ final class ProfileService {
             return
         }
         assert(Thread.isMainThread)
-        networkClient.fetch(request: request) { result in
-            switch result {
-            case .success(let data):
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let profileResponse = try decoder.decode(ProfileResponseBody.self, from: data)
-                    let profileData = ProfileData(username: "@"+profileResponse.username,
-                                                  name: profileResponse.name,
-                                                  bio: profileResponse.bio ?? "no bio")
-                    handler(.success(profileData))
-                } catch {
+        if !isFetchingNow {
+            networkClient.fetch(request: request) { result in
+                switch result {
+                case .success(let data):
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        let profileResponse = try decoder.decode(ProfileResponseBody.self, from: data)
+                        let profileData = ProfileData(username: "@"+profileResponse.username,
+                                                      name: profileResponse.name,
+                                                      bio: profileResponse.bio ?? "no bio")
+                        self.profile = ProfileData(username: "@"+profileResponse.username,
+                                              name: profileResponse.name,
+                                              bio: profileResponse.bio ?? "no bio")
+                        handler(.success(profileData))
+                    } catch {
+                        handler(.failure(error))
+                    }
+                case .failure(let error):
                     handler(.failure(error))
                 }
-            case .failure(let error):
-                handler(.failure(error))
             }
         }
     }
