@@ -20,14 +20,37 @@ final class ProfileViewController: UIViewController {
     private var userpicImageView = UIImageView()
     private var exitButton = ProfileExitButton()
     
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     //    MARK: - Lyfecycle
     
     override func viewDidLoad() {
         setViews()
         updateProfileData()
+        
+        profileImageServiceObserver = NotificationCenter.default    // 2
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification, // 3
+                object: nil,                                        // 4
+                queue: .main                                        // 5
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()                                 // 6
+            }
+        
+        updateAvatar()
+        
     }
     
 //    MARK: - Private methods
+    
+    private func updateAvatar() {                                   // 8
+        guard
+            let profileImageURL = ProfileImageService.shared.profileImageURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        // TODO [Sprint 11] Обновитt аватар, используя Kingfisher
+    }
     
     private func updateProfileData() {
         let profileService = ProfileService.shared

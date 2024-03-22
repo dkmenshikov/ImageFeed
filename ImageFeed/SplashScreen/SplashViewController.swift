@@ -72,7 +72,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     
     private func fetchProfileImageURL(username: String) {
         let profileImageService = ProfileImageService.shared
-        profileImageService.fetchProfileData(username: username) { result in
+        profileImageService.fetchProfileImageURL(username: username) { result in
             switch result {
             case .success(let profileURL):
                 print("Profile URL:", profileURL)

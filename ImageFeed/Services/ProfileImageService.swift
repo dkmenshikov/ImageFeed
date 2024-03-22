@@ -16,6 +16,11 @@ final class ProfileImageService: NetworkClientDelegate {
         networkClient.delegate = self
     }
     
+//    MARK: - Static properties
+    
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+        
+    
 //    MARK: - Public properties
     
     var isFetchingNow: Bool = false {
@@ -33,7 +38,7 @@ final class ProfileImageService: NetworkClientDelegate {
     
     //    MARK: - Public methods
     
-    func fetchProfileData(username: String, handler: @escaping (Result<String, Error>) -> Void) {
+    func fetchProfileImageURL(username: String, handler: @escaping (Result<String, Error>) -> Void) {
         guard let authToken = tokenStorageService.authToken else { return }
         guard let request = createProfileRequest(token: authToken, username: username) else {
             assertionFailure("nil Request")
@@ -52,6 +57,7 @@ final class ProfileImageService: NetworkClientDelegate {
                             print ("no URL in response")
                             return
                         }
+                        self.profileImageURL = profileImageURL
                         handler(.success(profileImageURL))
                     } catch {
                         handler(.failure(error))
@@ -60,6 +66,11 @@ final class ProfileImageService: NetworkClientDelegate {
                     handler(.failure(error))
                 }
             }
+            NotificationCenter.default                                     // 1
+                .post(                                                     // 2
+                    name: ProfileImageService.didChangeNotification,       // 3
+                    object: self,                                          // 4
+                    userInfo: ["URL": profileImageURL])                    // 5
         }
     }
     
