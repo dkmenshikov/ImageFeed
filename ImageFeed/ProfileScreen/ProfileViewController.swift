@@ -45,11 +45,12 @@ final class ProfileViewController: UIViewController {
 //    MARK: - Private methods
     
     private func updateAvatar() {                                   // 8
+        let profileImageService = ProfileImageService.shared
         guard
-            let profileImageURL = ProfileImageService.shared.profileImageURL,
+            let profileImageURL = profileImageService.profileImageURL,
             let url = URL(string: profileImageURL)
         else { return }
-        // TODO [Sprint 11] Обновитt аватар, используя Kingfisher
+        // TODO: - [Sprint 11] Обновитt аватар, используя Kingfisher
     }
     
     private func updateProfileData() {
