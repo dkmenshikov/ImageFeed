@@ -78,11 +78,24 @@ extension AuthViewController: WebViewViewControllerDelegate {
             case .success(let token):
                 let oAuthTokenStorage = OAuthTokenStorageService()
                 oAuthTokenStorage.authToken = token
-                print(token)
                 UIBlockingProgressHUD.dismiss()
                 self.delegate?.didAuthenticate(self)
             case .failure(let error):
+                UIBlockingProgressHUD.dismiss()
                 print (error)
+                let alert = UIAlertController(title: "Что-то пошло не так(",
+                                              message: "Не удалось войти в систему",
+                                              preferredStyle: .alert)
+                alert.view.accessibilityIdentifier = "Alert"
+                let action = UIAlertAction(title: "Ок", style: .default, handler: { [weak self] _ in
+                    guard let self else { return }
+                    alert.dismiss(animated: true, completion: nil)
+                    delegate?.failedToLaodToken(self)
+                })
+                alert.addAction(action)
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
     }

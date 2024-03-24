@@ -38,18 +38,12 @@ final class OAuth2Service: NetworkClientDelegate {
         }
         assert(Thread.isMainThread)
         if !isFetchingNow || lastCode != code {
-            networkClient.fetch(request: request) { result in
+            networkClient.fetch(request: request) { (result: Result<OAuthTokenResponseBody, any Error>) in
                 switch result {
-                case .success(let data):
-                    do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let oAuthTokenResponse = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                        print("TOKEN: ", oAuthTokenResponse.accessToken)
-                        handler(.success(oAuthTokenResponse.accessToken))
-                    } catch {
-                        handler(.failure(error))
-                    }
+                case .success(let oAuthTokenResponse):
+                    let token = oAuthTokenResponse.accessToken
+                    print("TOKEN: ", token)
+                    handler(.success(token))
                 case .failure(let error):
                     handler(.failure(error))
                 }
