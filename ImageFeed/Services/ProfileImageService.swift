@@ -5,7 +5,7 @@
 //  Created by Dmitriy Menshikov on 22.03.24.
 //
 
-import Foundation
+import UIKit
 
 final class ProfileImageService: NetworkClientDelegate {
     
@@ -19,7 +19,6 @@ final class ProfileImageService: NetworkClientDelegate {
 //    MARK: - Static properties
     
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
-        
     
 //    MARK: - Public properties
     
@@ -50,18 +49,18 @@ final class ProfileImageService: NetworkClientDelegate {
                 guard let self else { return }
                 switch result {
                 case .success(let profileImageURLResponse):
-                    profileImageURL = profileImageURLResponse.profileImage.small
+                    profileImageURL = profileImageURLResponse.profileImage?.medium
                     print(profileImageURL)
                     handler(.success(profileImageURL ?? ""))
                 case .failure(let error):
                     handler(.failure(error))
                 }
             }
-            NotificationCenter.default                                     // 1
-                .post(                                                     // 2
-                    name: ProfileImageService.didChangeNotification,       // 3
-                    object: self,                                          // 4
-                    userInfo: ["URL": profileImageURL])                    // 5
+            NotificationCenter.default
+                .post(
+                    name: ProfileImageService.didChangeNotification,
+                    object: self,
+                    userInfo: ["URL": profileImageURL])
         } else {
             print("second fetching while processing the first")
         }

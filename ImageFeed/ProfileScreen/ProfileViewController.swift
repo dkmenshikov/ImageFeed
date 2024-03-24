@@ -5,7 +5,7 @@
 //  Created by Dmitriy Menshikov on 16.02.24.
 //
 
-import Foundation
+import Kingfisher
 import UIKit
 
 final class ProfileViewController: UIViewController {
@@ -28,14 +28,14 @@ final class ProfileViewController: UIViewController {
         setViews()
         updateProfileData()
         
-        profileImageServiceObserver = NotificationCenter.default    // 2
+        profileImageServiceObserver = NotificationCenter.default
             .addObserver(
-                forName: ProfileImageService.didChangeNotification, // 3
-                object: nil,                                        // 4
-                queue: .main                                        // 5
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
             ) { [weak self] _ in
                 guard let self = self else { return }
-                self.updateAvatar()                                 // 6
+                self.updateAvatar()
             }
         
         updateAvatar()
@@ -44,13 +44,32 @@ final class ProfileViewController: UIViewController {
     
 //    MARK: - Private methods
     
-    private func updateAvatar() {                                   // 8
+    private func updateAvatar() {
         let profileImageService = ProfileImageService.shared
         guard
             let profileImageURL = profileImageService.profileImageURL,
             let url = URL(string: profileImageURL)
         else { return }
-        // TODO: - [Sprint 11] Обновитt аватар, используя Kingfisher
+        userpicImageView.contentMode = .scaleAspectFill
+        userpicImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 25)
+        userpicImageView.kf.setImage(with: url,
+                                     placeholder: UIImage.userPicStub,
+                                     options: [.processor(processor)]) { result in
+            switch result {
+            case .success(let value):
+                print(value.image)
+                // From where the image was retrieved:
+                // - .none - Just downloaded.
+                // - .memory - Got from memory cache.
+                // - .disk - Got from disk cache.
+                print(value.cacheType)
+                // The source object which contains information like `url`.
+                print(value.source)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     private func updateProfileData() {

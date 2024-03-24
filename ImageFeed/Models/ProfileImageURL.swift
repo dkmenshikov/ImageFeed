@@ -8,9 +8,9 @@
 import Foundation
 
 struct ProfileImageURL: Decodable {
-    let profileImage: ProfileImage
+    let profileImage: ProfileImage?
 }
 
 struct ProfileImage: Decodable {
-    let small: String?
+    let medium: String?
 }
