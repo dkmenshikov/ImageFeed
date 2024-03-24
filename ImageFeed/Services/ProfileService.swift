@@ -41,17 +41,14 @@ final class ProfileService: NetworkClientDelegate {
         }
         assert(Thread.isMainThread)
         if !isFetchingNow {
-            networkClient.fetch(request: request) { (result: Result<ProfileResponseBody, any Error>) in
+            networkClient.fetch(request: request) { [weak self] (result: Result<ProfileResponseBody, any Error>) in
+                guard let self else { return }
                 switch result {
                 case .success(let profileResponse):
-//                    TODO: - убрать задваивание
-                    let profileData = ProfileData(username: profileResponse.username,
-                                                  name: profileResponse.name,
-                                                  bio: profileResponse.bio ?? "")
-                    self.profile = ProfileData(username: profileResponse.username,
+                    profile = ProfileData(username: profileResponse.username,
                                                name: profileResponse.name,
                                                bio: profileResponse.bio ?? "")
-                    handler(.success(profileData))
+                    handler(.success(profile))
                 case .failure(let error):
                     handler(.failure(error))
                 }
