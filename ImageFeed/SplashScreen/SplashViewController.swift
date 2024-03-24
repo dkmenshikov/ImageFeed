@@ -22,6 +22,10 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         prepareProfileData()
     }
     
+    func failedToLaodToken(_ vc: AuthViewController) {
+        vc.navigationController?.popViewController(animated: true)
+    }
+    
 //    MARK: - Lyfecycle
     
     override func viewDidAppear(_ animated: Bool) {

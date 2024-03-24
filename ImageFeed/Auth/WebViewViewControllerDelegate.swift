@@ -5,8 +5,8 @@
 //  Created by Dmitriy Menshikov on 3.03.24.
 //
 
-import Foundation
+import UIKit
 
-protocol WebViewViewControllerDelegate: AnyObject {
+protocol WebViewViewControllerDelegate: UIViewController {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
 }
