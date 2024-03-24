@@ -46,22 +46,13 @@ final class ProfileImageService: NetworkClientDelegate {
         }
         assert(Thread.isMainThread)
         if !isFetchingNow {
-            networkClient.fetch(request: request) { result in
+            networkClient.fetch(request: request) { [weak self] (result: Result<ProfileImageURL, any Error>) in
+                guard let self else { return }
                 switch result {
-                case .success(let data):
-                    do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let profileImageURLResponse = try decoder.decode(ProfileImageURL.self, from: data)
-                        guard let profileImageURL = profileImageURLResponse.profileImage.small else {
-                            print ("no URL in response")
-                            return
-                        }
-                        self.profileImageURL = profileImageURL
-                        handler(.success(profileImageURL))
-                    } catch {
-                        handler(.failure(error))
-                    }
+                case .success(let profileImageURLResponse):
+                    profileImageURL = profileImageURLResponse.profileImage.small
+                    print(profileImageURL)
+                    handler(.success(profileImageURL ?? ""))
                 case .failure(let error):
                     handler(.failure(error))
                 }
@@ -71,6 +62,8 @@ final class ProfileImageService: NetworkClientDelegate {
                     name: ProfileImageService.didChangeNotification,       // 3
                     object: self,                                          // 4
                     userInfo: ["URL": profileImageURL])                    // 5
+        } else {
+            print("second fetching while processing the first")
         }
     }
     

@@ -41,27 +41,23 @@ final class ProfileService: NetworkClientDelegate {
         }
         assert(Thread.isMainThread)
         if !isFetchingNow {
-            networkClient.fetch(request: request) { result in
+            networkClient.fetch(request: request) { (result: Result<ProfileResponseBody, any Error>) in
                 switch result {
-                case .success(let data):
-                    do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let profileResponse = try decoder.decode(ProfileResponseBody.self, from: data)
-                        let profileData = ProfileData(username: profileResponse.username,
-                                                      name: profileResponse.name,
-                                                      bio: profileResponse.bio ?? "")
-                        self.profile = ProfileData(username: profileResponse.username,
-                                              name: profileResponse.name,
-                                              bio: profileResponse.bio ?? "")
-                        handler(.success(profileData))
-                    } catch {
-                        handler(.failure(error))
-                    }
+                case .success(let profileResponse):
+//                    TODO: - убрать задваивание
+                    let profileData = ProfileData(username: profileResponse.username,
+                                                  name: profileResponse.name,
+                                                  bio: profileResponse.bio ?? "")
+                    self.profile = ProfileData(username: profileResponse.username,
+                                               name: profileResponse.name,
+                                               bio: profileResponse.bio ?? "")
+                    handler(.success(profileData))
                 case .failure(let error):
                     handler(.failure(error))
                 }
             }
+        } else {
+            print("second fetching while processing the first")
         }
     }
     
