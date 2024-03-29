@@ -11,8 +11,8 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     
 //    MARK: - Private properties
     
-    private let toAuthSegueID = "toAuthSegue"
-    private let toTabBarSegueID = "toTabBarSegue"
+//    private let toAuthSegueID = "toAuthSegue"
+//    private let toTabBarSegueID = "toTabBarSegue"
     
     private var logoImageView = UIImageView()
     
@@ -41,24 +41,8 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
             print("TOKEN: ", String(oAuthTokenStorage.authToken ?? ""))
             prepareProfileData()
         } else {
-            performSegue(withIdentifier: toAuthSegueID, sender: nil)
-        }
-    }
-    
-//    MARK: - Override methods
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == toAuthSegueID {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else {
-                assertionFailure("Failed to prepare for \(toAuthSegueID)")
-                return
-            }
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
+//            performSegue(withIdentifier: toAuthSegueID, sender: nil)
+            switchToAuthViewController()
         }
     }
     
@@ -72,12 +56,35 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
             case .success(let profileData):
                 print(profileData)
                 fetchProfileImageURL(username: profileData.username)
-                performSegue(withIdentifier: toTabBarSegueID, sender: nil)
+                switchToTabBarController()
             case .failure(let error):
                 print (error)
-                performSegue(withIdentifier: toTabBarSegueID, sender: nil)
+                switchToTabBarController()
             }
         }
+    }
+    
+    private func switchToTabBarController() {
+        let tabBarVC = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: "TabBarViewController")
+        tabBarVC.modalPresentationStyle = .fullScreen
+        present(tabBarVC, animated: true)
+    }
+    
+    private func switchToAuthViewController() {
+//        let authVC = UIStoryboard(name: "Main", bundle: .main)
+//            .instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController
+//        guard let authVC else { return }
+//        authVC.delegate = self
+//        authVC.modalPresentationStyle = .fullScreen
+        let navController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: "NavigationController") as? UINavigationController
+        guard let navController else { return }
+        navController.modalPresentationStyle = .fullScreen
+        let viewController = navController.viewControllers[0] as? AuthViewController
+//        present(authVC, animated: true)
+        viewController?.delegate = self
+        present(navController, animated: true)
     }
     
     private func fetchProfileImageURL(username: String) {
