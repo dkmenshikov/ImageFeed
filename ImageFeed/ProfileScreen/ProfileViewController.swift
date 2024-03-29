@@ -82,7 +82,7 @@ final class ProfileViewController: UIViewController {
     
 }
 
-// MARK: - First time UI setter
+// MARK: - UI setter
 
 extension ProfileViewController {
     

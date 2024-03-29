@@ -14,6 +14,8 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private let toAuthSegueID = "toAuthSegue"
     private let toTabBarSegueID = "toTabBarSegue"
     
+    private var logoImageView = UIImageView()
+    
 //    MARK: - Public methods
     
     func didAuthenticate(_ vc: AuthViewController) {
@@ -27,6 +29,10 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     }
     
 //    MARK: - Lyfecycle
+    
+    override func viewDidLoad() {
+        setViews()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -84,5 +90,27 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
                 print(error)
             }
         }
+    }
+}
+
+extension SplashViewController {
+    
+//    MARK: - Views creation private methods
+    
+    private func setViews() {
+        view.backgroundColor = .ypBlack
+        logoImageView.image = UIImage.launchscreenPicture
+        view.addSubview(logoImageView)
+        setViewsConstraints()
+    }
+    
+//    MARK: - Constraints setter
+    
+    private func setViewsConstraints() {
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 }
