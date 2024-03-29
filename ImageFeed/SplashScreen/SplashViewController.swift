@@ -11,9 +11,6 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     
 //    MARK: - Private properties
     
-//    private let toAuthSegueID = "toAuthSegue"
-//    private let toTabBarSegueID = "toTabBarSegue"
-    
     private var logoImageView = UIImageView()
     
 //    MARK: - Public methods
@@ -38,10 +35,8 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         super.viewDidAppear(animated)
         let oAuthTokenStorage = OAuthTokenStorageService()
         if oAuthTokenStorage.authToken != nil {
-            print("TOKEN: ", String(oAuthTokenStorage.authToken ?? ""))
             prepareProfileData()
         } else {
-//            performSegue(withIdentifier: toAuthSegueID, sender: nil)
             switchToAuthViewController()
         }
     }
@@ -54,11 +49,10 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
             guard let self else { return }
             switch result {
             case .success(let profileData):
-                print(profileData)
                 fetchProfileImageURL(username: profileData.username)
                 switchToTabBarController()
             case .failure(let error):
-                print (error)
+                print("[LOG]: \(error)")
                 switchToTabBarController()
             }
         }
@@ -72,33 +66,28 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     }
     
     private func switchToAuthViewController() {
-//        let authVC = UIStoryboard(name: "Main", bundle: .main)
-//            .instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController
-//        guard let authVC else { return }
-//        authVC.delegate = self
-//        authVC.modalPresentationStyle = .fullScreen
-        let navController = UIStoryboard(name: "Main", bundle: .main)
+        let authFlowNavigationController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "NavigationController") as? UINavigationController
-        guard let navController else { return }
-        navController.modalPresentationStyle = .fullScreen
-        let viewController = navController.viewControllers[0] as? AuthViewController
-//        present(authVC, animated: true)
-        viewController?.delegate = self
-        present(navController, animated: true)
+        guard let authFlowNavigationController else { return }
+        authFlowNavigationController.modalPresentationStyle = .fullScreen
+        let authViewController = authFlowNavigationController.viewControllers[0] as? AuthViewController
+        authViewController?.delegate = self
+        present(authFlowNavigationController, animated: true)
     }
     
     private func fetchProfileImageURL(username: String) {
         let profileImageService = ProfileImageService.shared
         profileImageService.fetchProfileImageURL(username: username) { result in
             switch result {
-            case .success(let profileURL):
-                print("Profile URL:", profileURL)
+            case .success(_): break
             case .failure(let error):
-                print(error)
+                print("[LOG]: \(error)")
             }
         }
     }
 }
+
+// MARK: - UI setter
 
 extension SplashViewController {
     

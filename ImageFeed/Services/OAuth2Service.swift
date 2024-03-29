@@ -20,7 +20,7 @@ final class OAuth2Service: NetworkClientDelegate {
     
     var isFetchingNow: Bool = false {
         didSet {
-            print("fetching token:", isFetchingNow ? "START" : "DONE")
+            print("[LOG][OAuth2Service]: fetching token:", isFetchingNow ? "START" : "DONE")
         }
     }
     
@@ -42,14 +42,13 @@ final class OAuth2Service: NetworkClientDelegate {
                 switch result {
                 case .success(let oAuthTokenResponse):
                     let token = oAuthTokenResponse.accessToken
-                    print("TOKEN: ", token)
                     handler(.success(token))
                 case .failure(let error):
                     handler(.failure(error))
                 }
             }
         } else {
-            print ("Second fetch with the same code")
+            print ("[LOG][OAuth2Service]: second fetch with the same code")
         }
         lastCode = code
     }

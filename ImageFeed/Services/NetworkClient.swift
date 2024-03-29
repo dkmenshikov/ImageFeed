@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NetworkClient {
+class NetworkClient {
     
     private enum NetworkClientError: Error {
         case httpStatusCode(Int)
@@ -20,7 +20,7 @@ struct NetworkClient {
     
     private var task: URLSessionDataTask?
     
-    mutating func fetch <Response: Decodable>(request: URLRequest, handler: @escaping (Result<Response, Error>) -> Void) {
+    func fetch <Response: Decodable>(request: URLRequest, handler: @escaping (Result<Response, Error>) -> Void) {
         let fulfillCompletionOnTheMainThread: (Result<Response, Error>) -> Void = { result in
             DispatchQueue.main.async {
                 handler(result)
@@ -28,11 +28,15 @@ struct NetworkClient {
         }
         if task != nil {
             task?.cancel()
-            print("Second fetch while processing the first")
+            print("[LOG][NetworkClient]: second fetch while processing the first")
         }
         delegate?.isFetchingNow = true
-        task = URLSession.shared.dataTask(with: request) { [self] data, response, error in
+        task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard let self else { return }
             delegate?.isFetchingNow = false
+            defer {
+                task = nil
+            }
             if let error {
                 fulfillCompletionOnTheMainThread(.failure(NetworkClientError.urlRequestError(error)))
                 return

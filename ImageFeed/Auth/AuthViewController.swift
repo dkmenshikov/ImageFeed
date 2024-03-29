@@ -82,7 +82,7 @@ extension AuthViewController: WebViewViewControllerDelegate {
                 self.delegate?.didAuthenticate(self)
             case .failure(let error):
                 UIBlockingProgressHUD.dismiss()
-                print (error)
+                print("[LOG]: \(error)")
                 let alert = UIAlertController(title: "Что-то пошло не так(",
                                               message: "Не удалось войти в систему",
                                               preferredStyle: .alert)

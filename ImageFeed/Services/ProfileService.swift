@@ -20,7 +20,7 @@ final class ProfileService: NetworkClientDelegate {
     
     var isFetchingNow: Bool = false {
         didSet {
-            print("fetching profile data:", isFetchingNow ? "START" : "DONE")
+            print("[LOG][ProfileService]: fetching profile data:", isFetchingNow ? "START" : "DONE")
         }
     }
     
@@ -54,7 +54,7 @@ final class ProfileService: NetworkClientDelegate {
                 }
             }
         } else {
-            print("second fetching while processing the first")
+            print("[LOG][ProfileService]: second fetching while processing the first")
         }
     }
     

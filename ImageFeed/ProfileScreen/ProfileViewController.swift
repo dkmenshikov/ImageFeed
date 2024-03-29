@@ -57,17 +57,9 @@ final class ProfileViewController: UIViewController {
                                      placeholder: UIImage.userPicStub,
                                      options: [.processor(processor)]) { result in
             switch result {
-            case .success(let value):
-                print(value.image)
-                // From where the image was retrieved:
-                // - .none - Just downloaded.
-                // - .memory - Got from memory cache.
-                // - .disk - Got from disk cache.
-                print(value.cacheType)
-                // The source object which contains information like `url`.
-                print(value.source)
+            case .success(_): break
             case .failure(let error):
-                print(error)
+                print("[LOG]: \(error)")
             }
         }
     }

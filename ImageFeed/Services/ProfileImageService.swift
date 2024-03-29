@@ -24,7 +24,7 @@ final class ProfileImageService: NetworkClientDelegate {
     
     var isFetchingNow: Bool = false {
         didSet {
-            print("fetching profile image URL:", isFetchingNow ? "START" : "DONE")
+            print("[LOG][ProfileImageService]: fetching profile image URL:", isFetchingNow ? "START" : "DONE")
         }
     }
     
@@ -50,7 +50,6 @@ final class ProfileImageService: NetworkClientDelegate {
                 switch result {
                 case .success(let profileImageURLResponse):
                     profileImageURL = profileImageURLResponse.profileImage?.medium
-                    print(profileImageURL)
                     handler(.success(profileImageURL ?? ""))
                 case .failure(let error):
                     handler(.failure(error))
@@ -62,7 +61,7 @@ final class ProfileImageService: NetworkClientDelegate {
                     object: self,
                     userInfo: ["URL": profileImageURL])
         } else {
-            print("second fetching while processing the first")
+            print("[LOG][ProfileImageService]: second fetching while processing the first")
         }
     }
     
