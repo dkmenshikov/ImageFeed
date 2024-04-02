@@ -47,12 +47,14 @@ class NetworkClient {
                     return
                 } else {
                     guard let data else { return }
+//                    print(String(data: data, encoding: .utf8))
                     do {
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase
                         let response = try decoder.decode(Response.self, from: data)
                         fulfillCompletionOnTheMainThread(.success(response))
                     } catch {
+                        print("JSON DECODING FAILURE")
                         fulfillCompletionOnTheMainThread(.failure(NetworkClientError.decodingError))
                     }
                 }
