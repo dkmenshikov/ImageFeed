@@ -6,18 +6,21 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 final class OAuthTokenStorageService {
     
-    private let userDefaults = UserDefaults.standard
+    private let keychainWrapper = KeychainWrapper.standard
     private let authTokenKey = "authTokenKey"
     
     var authToken: String? {
         get {
-            return userDefaults.string(forKey: authTokenKey) ?? nil
+            return keychainWrapper.string(forKey: authTokenKey) ?? nil
         }
         set {
-            userDefaults.setValue(newValue, forKey: authTokenKey)
+            guard let newValue else { return }
+            keychainWrapper.set(newValue, forKey: authTokenKey)
         }
     }
 }
+

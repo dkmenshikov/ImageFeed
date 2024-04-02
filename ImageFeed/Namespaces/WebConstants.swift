@@ -16,4 +16,6 @@ enum WebConstants {
     static let apiURL = URL(string: "https://api.unsplash.com/")
     static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     static let authPath = "oauth/token"
+    static let mePath = "me"
+    static let publicUserInfoPath = "users/"
 }

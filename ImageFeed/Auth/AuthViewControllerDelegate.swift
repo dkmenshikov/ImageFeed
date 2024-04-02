@@ -5,8 +5,9 @@
 //  Created by Dmitriy Menshikov on 13.03.24.
 //
 
-import Foundation
+import UIKit
 
-protocol AuthViewControllerDelegate: AnyObject {
+protocol AuthViewControllerDelegate: UIViewController {
     func didAuthenticate(_ vc: AuthViewController)
+    func failedToLaodToken(_ vc: AuthViewController)
 }

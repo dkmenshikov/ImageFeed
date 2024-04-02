@@ -5,26 +5,78 @@
 //  Created by Dmitriy Menshikov on 16.02.24.
 //
 
-import Foundation
+import Kingfisher
 import UIKit
 
 final class ProfileViewController: UIViewController {
     
-//    MARK: - Private properties (screen views)
+    //    MARK: - Private properties (screen views)
     
     private var nameLabel = UILabel()
     private var nicknameLabel = UILabel()
-    private var statementLabel = UILabel()
+    private var bioLabel = UILabel()
     private var labelsStack = UIStackView()
     
     private var userpicImageView = UIImageView()
     private var exitButton = ProfileExitButton()
     
-//    MARK: - Lyfecycle
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+    //    MARK: - Lyfecycle
     
     override func viewDidLoad() {
         setViews()
+        updateProfileData()
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        
+        updateAvatar()
+        
     }
+    
+//    MARK: - Private methods
+    
+    private func updateAvatar() {
+        let profileImageService = ProfileImageService.shared
+        guard
+            let profileImageURL = profileImageService.profileImageURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        userpicImageView.contentMode = .scaleAspectFill
+        userpicImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 25)
+        userpicImageView.kf.setImage(with: url,
+                                     placeholder: UIImage.userPicStub,
+                                     options: [.processor(processor)]) { result in
+            switch result {
+            case .success(_): break
+            case .failure(let error):
+                print("[LOG]: \(error)")
+            }
+        }
+    }
+    
+    private func updateProfileData() {
+        let profileService = ProfileService.shared
+        let profileData = profileService.profile
+        nameLabel.text = profileData.name
+        nicknameLabel.text = "@"+profileData.username
+        bioLabel.text = profileData.bio
+    }
+    
+}
+
+// MARK: - UI setter
+
+extension ProfileViewController {
     
 //    MARK: - Views creation private methods
     
@@ -35,8 +87,8 @@ final class ProfileViewController: UIViewController {
         exitButton = createExitButton()
         nameLabel = createLabel(text: "Name Lastname", textSize: 23, textColor: .ypWhite)
         nicknameLabel = createLabel(text: "@nickname", textSize: 13, textColor: .ypGray)
-        statementLabel = createLabel(text: "statement", textSize: 13, textColor: .ypWhite)
-        labelsStack = createStackView (nameLabel: nameLabel, nicknameLabel: nicknameLabel, statementLabel: statementLabel)
+        bioLabel = createLabel(text: "statement", textSize: 13, textColor: .ypWhite)
+        labelsStack = createStackView (nameLabel: nameLabel, nicknameLabel: nicknameLabel, statementLabel: bioLabel)
         
         [userpicImageView, exitButton, labelsStack].forEach {
             view.addSubview($0)
@@ -77,7 +129,7 @@ final class ProfileViewController: UIViewController {
     private func setViewsConstraints() {
         
         // tAMIC off for all views
-        [userpicImageView, exitButton, nameLabel, nicknameLabel, statementLabel, labelsStack].forEach {
+        [userpicImageView, exitButton, nameLabel, nicknameLabel, bioLabel, labelsStack].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -94,7 +146,7 @@ final class ProfileViewController: UIViewController {
         ])
         
         // labels constraints
-        [nameLabel, nicknameLabel, statementLabel].forEach {
+        [nameLabel, nicknameLabel, bioLabel].forEach {
             $0.heightAnchor.constraint(equalToConstant: 18).isActive = true
         }
         

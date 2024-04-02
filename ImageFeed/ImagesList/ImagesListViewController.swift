@@ -91,7 +91,7 @@ extension ImagesListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
         
         guard let imageListCell = cell as? ImagesListCell else {
-            print ("Ошибка инициализации кастомной ячейки")
+            print("[LOG]: Unable to init custom cell")
             return UITableViewCell()
         }
         imageListCell.configCell(with: indexPath)
