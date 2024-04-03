@@ -20,40 +20,60 @@ final class ImagesListPhotos: NetworkClientDelegate {
             print("[LOG][ImagesListService]: fetching images:", isFetchingNow ? "START" : "DONE")
         }
     }
+    
+    //    MARK: - Static properties
+    
+    static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+    
     //    MARK: - Private properties
     
     private let tokenService = OAuthTokenStorageService()
     private var networkClient = NetworkClient()
     private (set) var photos: [Photo] = []
-    private var lastLoadedPage: Int?
+    private var lastLoadedPage: Int = 0
     
     //    MARK: - Public methods
     
-//    TODO: - в звмыкании заменить переметр на [Photo], обработать превращение ответа в модель для UI
-    
-    func fetchPhotosNextPage(handler: @escaping (Result<PhotoListResponseBody, Error>) -> Void) {
-        let nextPage = (lastLoadedPage ?? 0) + 1
-        guard let token = tokenService.authToken else { return }
-        guard let request = createPhotosListRequest(token: token, page: nextPage) else {
-            assertionFailure("nil Request")
-            return
-        }
-        print(request.httpMethod, request.url, request.allHTTPHeaderFields)
-        
-//        TODO: - дописать исключения повторного фетча 
-        
-        networkClient.fetch(request: request) { [weak self] (result: Result<PhotoListResponseBody, any Error>) in
-            guard let self else { return }
-            switch result {
-            case .success(let photoListResponse):
-                print ("SUCCESS")
-                print (photoListResponse)
-//                TODO: - добавить нотификацию после обновления массива с фото
-                handler(.success(photoListResponse))
-            case .failure(let error):
-                handler(.failure(error))
-                print("ERROR")
+    func fetchPhotosNextPage() {
+        if !isFetchingNow {
+            let nextPage = lastLoadedPage + 1
+            guard let token = tokenService.authToken else { return }
+            guard let request = createPhotosListRequest(token: token, page: nextPage) else {
+                assertionFailure("nil Request")
+                return
             }
+            networkClient.fetch(request: request) { [weak self] (result: Result<PhotoListResponseBody, any Error>) in
+                guard let self else { return }
+                switch result {
+                case .success(let photoListResponse):
+                    print ("SUCCESS")
+                    lastLoadedPage += 1
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                    photoListResponse.forEach {
+                        let date = dateFormatter.date(from: $0.createdAt)
+                        self.photos.append(Photo(id: $0.id,
+                                               size: CGSize(width: $0.width, height: $0.height),
+                                               createdAt: date,
+                                               welcomeDescription: $0.description,
+                                               thumbImageURL: $0.urls.thumb,
+                                               largeImageURL: $0.urls.full,
+                                               isLiked: $0.likedByUser))
+                    }
+                    print(photos[0])
+                    print(photoListResponse[0].createdAt)
+                    NotificationCenter.default
+                        .post(
+                            name: ImagesListPhotos.didChangeNotification,
+                            object: self,
+                            userInfo: ["Photos: ": "appended"])
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        } else {
+            print("[LOG][ImagesListPhotos]: second fetch while processing the first")
+            return
         }
     }
     
