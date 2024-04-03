@@ -1,5 +1,5 @@
 //
-//  ImagesListPhotos.swift
+//  ImagesListService.swift
 //  ImageFeed
 //
 //  Created by Dmitriy Menshikov on 2.04.24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ImagesListPhotos: NetworkClientDelegate {
+final class ImagesListService: NetworkClientDelegate {
     
     init() {
         networkClient.delegate = self
@@ -64,7 +64,7 @@ final class ImagesListPhotos: NetworkClientDelegate {
                     print(photoListResponse[0].createdAt)
                     NotificationCenter.default
                         .post(
-                            name: ImagesListPhotos.didChangeNotification,
+                            name: ImagesListService.didChangeNotification,
                             object: self,
                             userInfo: ["Photos: ": "appended"])
                 case .failure(let error):
@@ -72,7 +72,7 @@ final class ImagesListPhotos: NetworkClientDelegate {
                 }
             }
         } else {
-            print("[LOG][ImagesListPhotos]: second fetch while processing the first")
+            print("[LOG][ImagesListService]: second fetch while processing the first")
             return
         }
     }
