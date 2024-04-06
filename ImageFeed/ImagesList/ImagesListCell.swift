@@ -12,7 +12,7 @@ import UIKit
 final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier: String = "ImagesListCell"
-    private weak var delegate: ImagesListViewController?
+    private weak var delegate: ImagesListCellDelegate?
     private var indexPath: IndexPath?
     
     @IBOutlet private weak var cellPicture: UIImageView!
@@ -28,7 +28,7 @@ final class ImagesListCell: UITableViewCell {
         return formatter
     }()
     
-    func configCell(with indexPath: IndexPath, photo: Photo, delegate: ImagesListViewController)  {
+    func configCell(with indexPath: IndexPath, photo: Photo, delegate: ImagesListCellDelegate)  {
         cellPicture.contentMode = .scaleAspectFill
         cellPicture.kf.indicatorType = .activity
         cellPicture.kf.setImage(with: photo.thumbImageURL,

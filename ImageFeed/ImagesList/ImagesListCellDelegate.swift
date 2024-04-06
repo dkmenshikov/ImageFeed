@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ImagesListCellDelegate {
+protocol ImagesListCellDelegate: AnyObject {
     func changeLike(indexPath: IndexPath, completion: @escaping (Bool) -> (Void))
 }

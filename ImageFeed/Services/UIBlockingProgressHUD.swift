@@ -16,7 +16,7 @@ final class UIBlockingProgressHUD {
     
     static func show() {
         window?.isUserInteractionEnabled = false
-        ProgressHUD.animate(nil, .circleArcDotSpin)
+        ProgressHUD.animate()
     }
     
     static func dismiss() {

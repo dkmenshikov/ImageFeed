@@ -97,6 +97,8 @@ final class ImagesListViewController: UIViewController, ImagesListCellDelegate {
             }
             guard let image = UIImage(named: photosName[indexPath.row]) else { return }
             viewController.image = image
+//            let image = photos[indexPath.row]
+//            viewController.image = image
         } else {
             super.prepare(for: segue, sender: sender)
         }

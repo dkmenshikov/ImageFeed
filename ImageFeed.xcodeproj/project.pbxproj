@@ -133,7 +133,6 @@
 				328F171A2B93D8D200346011 /* WebViewViewController.swift */,
 				328F171C2B93E96100346011 /* WebViewViewControllerDelegate.swift */,
 				3275662A2BA232E900131155 /* AuthViewControllerDelegate.swift */,
-				327566322BAA2E3700131155 /* UIBlockingProgressHUD.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -148,6 +147,7 @@
 				327566212B9FEF9300131155 /* NetworkClient.swift */,
 				327566232BA0C07400131155 /* OAuthTokenStorageService.swift */,
 				327566302BA9FFA400131155 /* NetworkClientDelegate.swift */,
+				327566322BAA2E3700131155 /* UIBlockingProgressHUD.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
