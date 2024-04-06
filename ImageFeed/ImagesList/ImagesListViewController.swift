@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Kingfisher
 import ProgressHUD
 import UIKit
 
@@ -95,10 +96,9 @@ final class ImagesListViewController: UIViewController, ImagesListCellDelegate {
                 assertionFailure("Invalid segue destination")
                 return
             }
-            guard let image = UIImage(named: photosName[indexPath.row]) else { return }
-            viewController.image = image
-//            let image = photos[indexPath.row]
-//            viewController.image = image
+            let imageURL = photos[indexPath.row].largeImageURL
+            viewController.imageURL = imageURL
+            
         } else {
             super.prepare(for: segue, sender: sender)
         }
