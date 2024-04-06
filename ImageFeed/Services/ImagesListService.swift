@@ -56,13 +56,16 @@ final class ImagesListService: NetworkClientDelegate {
                             let thumbURL = URL(string: $0.urls.thumb),
                             let fullURL = URL(string: $0.urls.full) else { return }
                         let date = dateFormatter.date(from: $0.createdAt)
-                        self.photos.append(Photo(id: $0.id,
+                        let newElement = Photo(id: $0.id,
                                                size: CGSize(width: $0.width, height: $0.height),
                                                createdAt: date,
                                                welcomeDescription: $0.description,
                                                thumbImageURL: thumbURL,
                                                largeImageURL: fullURL,
-                                               isLiked: $0.likedByUser))
+                                               isLiked: $0.likedByUser)
+                        if !self.photos.contains(newElement) {
+                            self.photos.append(newElement)
+                        }
                     }
                     NotificationCenter.default
                         .post(
