@@ -11,6 +11,7 @@ final class ImagesListService: NetworkClientDelegate {
     
     init() {
         networkClient.delegate = self
+        fetchPhotosNextPage()
     }
     
     //    MARK: - Public properties
@@ -51,17 +52,18 @@ final class ImagesListService: NetworkClientDelegate {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
                     photoListResponse.forEach {
+                        guard
+                            let thumbURL = URL(string: $0.urls.thumb),
+                            let fullURL = URL(string: $0.urls.full) else { return }
                         let date = dateFormatter.date(from: $0.createdAt)
                         self.photos.append(Photo(id: $0.id,
                                                size: CGSize(width: $0.width, height: $0.height),
                                                createdAt: date,
                                                welcomeDescription: $0.description,
-                                               thumbImageURL: $0.urls.thumb,
-                                               largeImageURL: $0.urls.full,
+                                               thumbImageURL: thumbURL,
+                                               largeImageURL: fullURL,
                                                isLiked: $0.likedByUser))
                     }
-                    print(photos[0])
-                    print(photoListResponse[0].createdAt)
                     NotificationCenter.default
                         .post(
                             name: ImagesListService.didChangeNotification,

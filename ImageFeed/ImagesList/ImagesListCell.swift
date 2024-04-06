@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Kingfisher
 import UIKit
 
 final class ImagesListCell: UITableViewCell {
@@ -25,21 +26,21 @@ final class ImagesListCell: UITableViewCell {
         return formatter
     }()
     
-    func configCell(with indexPath: IndexPath)  {
-        guard let picture: UIImage = UIImage(named: "\(indexPath.row)") else {
-            return
-        }
-        cellPicture.image = picture
+    func configCell(with indexPath: IndexPath, photo: Photo)  {
         cellPicture.contentMode = .scaleAspectFill
+        cellPicture.kf.indicatorType = .activity
+        cellPicture.kf.setImage(with: photo.thumbImageURL,
+                                placeholder: UIImage.photoThumbStub)
         cellPicture.layer.cornerRadius = 16
         cellPicture.clipsToBounds = true
         backgroundColor = .ypBlack
-        dateLabel.text = dateFormatter.string(from: Date())
-        if indexPath.row % 2 == 0 {
-            likeButton.setImage(.likeActive, for: [])
-        } else {
-            likeButton.setImage(.likeInactive, for: [])
-        }
+        dateLabel.text = dateFormatter.string(from: photo.createdAt ?? Date())
+        likeButton.setImage(photo.isLiked ? .likeActive : .likeInactive, for: [])
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cellPicture.kf.cancelDownloadTask()
     }
     
 }
