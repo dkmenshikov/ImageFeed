@@ -58,6 +58,10 @@ final class ProfileService: NetworkClientDelegate {
         }
     }
     
+    func clearProfileData() {
+        profile = ProfileData(username: "", name: "", bio: "")
+    }
+    
     //    MARK: - Private methods
     
     private func createProfileRequest(token: String) -> URLRequest? {

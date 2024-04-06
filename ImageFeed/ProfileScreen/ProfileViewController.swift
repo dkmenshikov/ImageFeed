@@ -22,6 +22,8 @@ final class ProfileViewController: UIViewController {
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
+    private var profileLogoutService = ProfileLogoutService.shared
+    
     //    MARK: - Lyfecycle
     
     override func viewDidLoad() {
@@ -39,17 +41,28 @@ final class ProfileViewController: UIViewController {
             }
         
         updateAvatar()
-        
+        exitButton.addTarget(self, action: #selector(logoutButtonDidTap), for: .touchUpInside)
     }
     
 //    MARK: - Private methods
+    
+    @objc 
+    private func logoutButtonDidTap() {
+        print ("LOGOUT")
+        profileLogoutService.logout()
+        updateProfileData()
+        updateAvatar()
+    }
     
     private func updateAvatar() {
         let profileImageService = ProfileImageService.shared
         guard
             let profileImageURL = profileImageService.profileImageURL,
             let url = URL(string: profileImageURL)
-        else { return }
+        else {
+            userpicImageView.image = UIImage.userPicStub
+            return
+        }
         userpicImageView.contentMode = .scaleAspectFill
         userpicImageView.kf.indicatorType = .activity
         let processor = RoundCornerImageProcessor(cornerRadius: 25)

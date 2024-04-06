@@ -65,6 +65,10 @@ final class ProfileImageService: NetworkClientDelegate {
         }
     }
     
+    func clearProfileImage() {
+        profileImageURL = nil
+    }
+    
     //    MARK: - Private methods
     
     private func createProfileRequest(token: String, username: String) -> URLRequest? {

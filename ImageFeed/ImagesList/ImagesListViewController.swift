@@ -10,7 +10,7 @@ import Kingfisher
 import ProgressHUD
 import UIKit
 
-final class ImagesListViewController: UIViewController, ImagesListCellDelegate {
+final class ImagesListViewController: UIViewController, ImagesListCellDelegate, ProfileLogoutServiceDelegate {
     
 //    MARK: - IBOutlets
     
@@ -18,7 +18,6 @@ final class ImagesListViewController: UIViewController, ImagesListCellDelegate {
     
 //    MARK: - Private propeties
     
-    private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private let showSingleImageSegueIdentifier: String = "ShowSingleImage"
     
     private var imagesListServiceObserver: NSObjectProtocol?
@@ -45,6 +44,12 @@ final class ImagesListViewController: UIViewController, ImagesListCellDelegate {
         }
     }
     
+    func cleanImagesList() {
+        photos = []
+        dismiss(animated: true)
+    }
+    
+    
 //    MARK: - Lyfecycle
     
     override func viewDidLoad() {
@@ -59,6 +64,10 @@ final class ImagesListViewController: UIViewController, ImagesListCellDelegate {
                 guard let self = self else { return }
                 self.updateTableViewAnimated()
             }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        ProfileLogoutService.shared.delegate = self
     }
     
 //    MARK: - Private methods
