@@ -23,3 +23,12 @@ struct PhotoURLs: Decodable {
 }
 
 typealias PhotoListResponseBody = [PhotoInfo]
+
+struct PhotoLikeChangedResponse: Decodable {
+    let photo: PhotoLikeChanged
+}
+
+struct PhotoLikeChanged: Decodable {
+    let id: String
+    let likedByUser: Bool
+}

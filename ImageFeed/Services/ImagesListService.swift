@@ -82,6 +82,24 @@ final class ImagesListService: NetworkClientDelegate {
         }
     }
     
+    func changeLike(photoID: String, isLiked: Bool, completion: @escaping (Result<PhotoLikeChanged, Error>) -> Void) {
+        guard let token = tokenService.authToken else { return }
+        guard let request = createChangeLikeRequest(token: token, photoID: photoID, isLiked: isLiked) else {
+            assertionFailure("nil Request")
+            return
+        }
+        networkClient.fetch(request: request) { [weak self] (result: Result<PhotoLikeChangedResponse, any Error>) in
+            guard let self else { return }
+            switch result {
+            case .success(let response):
+                let photo = response.photo
+                completion(.success(photo))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     //    MARK: - Private methods
     
     private func createPhotosListRequest(token: String ,page: Int, photosPerPage: Int = 10) -> URLRequest? {
@@ -97,6 +115,23 @@ final class ImagesListService: NetworkClientDelegate {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return request
+    }
+    
+    private func createChangeLikeRequest(token: String, photoID: String, isLiked: Bool) -> URLRequest? {
+        var urlComponents = URLComponents()
+        urlComponents.path = WebConstants.photosPath + photoID + WebConstants.likePath
+        guard let url = urlComponents.url(relativeTo: WebConstants.apiURL) else {
+            assertionFailure("Unable to create URL")
+            return nil
+        }
+        var request = URLRequest(url: url)
+        if isLiked {
+            request.httpMethod = HTTPMethods.delete
+        } else {
+            request.httpMethod = HTTPMethods.post
+        }
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }

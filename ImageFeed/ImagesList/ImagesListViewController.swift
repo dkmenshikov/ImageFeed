@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import ProgressHUD
 import UIKit
 
-final class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController, ImagesListCellDelegate {
     
 //    MARK: - IBOutlets
     
@@ -22,6 +23,26 @@ final class ImagesListViewController: UIViewController {
     private var imagesListServiceObserver: NSObjectProtocol?
     private var photos: [Photo] = []
     private var imagesListService = ImagesListService()
+    
+//    MARK: - Public methods
+    
+    func changeLike(indexPath: IndexPath, completion: @escaping (Bool) -> (Void)) {
+        UIBlockingProgressHUD.show()
+        imagesListService.changeLike(photoID: photos[indexPath.row].id,
+                                     isLiked: photos[indexPath.row].isLiked) { [weak self] (result: Result<PhotoLikeChanged, any Error>) in
+            guard let self else { return }
+            switch result {
+            case .success(let photo):
+                self.photos[indexPath.row].isLiked = photo.likedByUser
+                UIBlockingProgressHUD.dismiss()
+                completion(true)
+            case .failure(let error):
+                print("[LOG]: failure of updating like status, \(error)")
+                UIBlockingProgressHUD.dismiss()
+                completion(false)
+            }
+        }
+    }
     
 //    MARK: - Lyfecycle
     
@@ -64,22 +85,6 @@ final class ImagesListViewController: UIViewController {
     
 //    MARK: - Override methods
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//        if segue.identifier == showSingleImageSegueIdentifier {
-//            guard
-//                let viewController = segue.destination as? SingleImageViewController,
-//                let indexPath = sender as? IndexPath
-//            else {
-//                assertionFailure("Invalid segue destination")
-//                return
-//            }
-//            guard let image = UIImage(named: photosName[indexPath.row]) else { return }
-//            viewController.image = image
-//        } else {
-//            super.prepare(for: segue, sender: sender)
-//        }
-//    }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == showSingleImageSegueIdentifier {
@@ -140,7 +145,7 @@ extension ImagesListViewController: UITableViewDataSource {
             print("[LOG]: Unable to init custom cell")
             return UITableViewCell()
         }
-        imageListCell.configCell(with: indexPath, photo: photos[indexPath.row])
+        imageListCell.configCell(with: indexPath, photo: photos[indexPath.row], delegate: self)
         tableView.reloadRows(at: [indexPath], with: .automatic)
         return imageListCell
     }

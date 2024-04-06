@@ -12,6 +12,8 @@ import UIKit
 final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier: String = "ImagesListCell"
+    private weak var delegate: ImagesListViewController?
+    private var indexPath: IndexPath?
     
     @IBOutlet private weak var cellPicture: UIImageView!
     @IBOutlet private weak var likeButton: UIButton!
@@ -26,7 +28,7 @@ final class ImagesListCell: UITableViewCell {
         return formatter
     }()
     
-    func configCell(with indexPath: IndexPath, photo: Photo)  {
+    func configCell(with indexPath: IndexPath, photo: Photo, delegate: ImagesListViewController)  {
         cellPicture.contentMode = .scaleAspectFill
         cellPicture.kf.indicatorType = .activity
         cellPicture.kf.setImage(with: photo.thumbImageURL,
@@ -36,6 +38,9 @@ final class ImagesListCell: UITableViewCell {
         backgroundColor = .ypBlack
         dateLabel.text = dateFormatter.string(from: photo.createdAt ?? Date())
         likeButton.setImage(photo.isLiked ? .likeActive : .likeInactive, for: [])
+        
+        self.delegate = delegate
+        self.indexPath = indexPath
     }
     
     override func prepareForReuse() {
@@ -43,4 +48,12 @@ final class ImagesListCell: UITableViewCell {
         cellPicture.kf.cancelDownloadTask()
     }
     
+    @IBAction func likeButtonDidTap(_ sender: Any) {
+        delegate?.changeLike(indexPath: self.indexPath!) { [weak self] result in
+            guard let self else { return }
+            if result {
+                self.likeButton.setImage(self.likeButton.image(for: []) == .likeInactive ? .likeActive : .likeInactive, for: [])
+            }
+        }
+    }
 }
