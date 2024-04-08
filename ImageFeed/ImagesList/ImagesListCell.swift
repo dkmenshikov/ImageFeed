@@ -36,9 +36,12 @@ final class ImagesListCell: UITableViewCell {
         cellPicture.layer.cornerRadius = 16
         cellPicture.clipsToBounds = true
         backgroundColor = .ypBlack
-        dateLabel.text = dateFormatter.string(from: photo.createdAt ?? Date())
+        if let date = photo.createdAt {
+            dateLabel.text = dateFormatter.string(from: date)
+        } else {
+            dateLabel.text = ""
+        }
         likeButton.setImage(photo.isLiked ? .likeActive : .likeInactive, for: [])
-        
         self.delegate = delegate
         self.indexPath = indexPath
     }
