@@ -32,6 +32,11 @@ final class ImagesListService: NetworkClientDelegate {
     private var networkClient = NetworkClient()
     private (set) var photos: [Photo] = []
     private var lastLoadedPage: Int = 0
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return formatter
+    }()
     
     //    MARK: - Public methods
     
@@ -47,15 +52,12 @@ final class ImagesListService: NetworkClientDelegate {
                 guard let self else { return }
                 switch result {
                 case .success(let photoListResponse):
-                    print ("SUCCESS")
                     lastLoadedPage += 1
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
                     photoListResponse.forEach {
                         guard
                             let thumbURL = URL(string: $0.urls.thumb),
                             let fullURL = URL(string: $0.urls.full) else { return }
-                        let date = dateFormatter.date(from: $0.createdAt)
+                        let date = self.dateFormatter.date(from: $0.createdAt)
                         let newElement = Photo(id: $0.id,
                                                size: CGSize(width: $0.width, height: $0.height),
                                                createdAt: date,
@@ -73,7 +75,7 @@ final class ImagesListService: NetworkClientDelegate {
                             object: self,
                             userInfo: ["Photos: ": "appended"])
                 case .failure(let error):
-                    print(error)
+                    print("[LOG][ImagesListService]: ", error)
                 }
             }
         } else {
