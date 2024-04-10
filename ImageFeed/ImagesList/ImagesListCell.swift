@@ -52,7 +52,8 @@ final class ImagesListCell: UITableViewCell {
     }
     
     @IBAction func likeButtonDidTap(_ sender: Any) {
-        delegate?.changeLike(indexPath: self.indexPath!) { [weak self] result in
+        guard let indexPath else { return }
+        delegate?.changeLike(indexPath: indexPath) { [weak self] result in
             guard let self else { return }
             if result {
                 self.likeButton.setImage(self.likeButton.image(for: []) == .likeInactive ? .likeActive : .likeInactive, for: [])
