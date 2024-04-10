@@ -28,8 +28,8 @@ final class ProfileService: NetworkClientDelegate {
     
     //    MARK: - Private properties
     
-    private var networkClient = NetworkClient()
-    private var tokenStorageService = OAuthTokenStorageService()
+    private let networkClient = NetworkClient()
+    private let tokenStorageService = OAuthTokenStorageService()
     
     //    MARK: - Public methods
     

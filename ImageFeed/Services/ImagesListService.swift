@@ -28,15 +28,11 @@ final class ImagesListService: NetworkClientDelegate {
     
     //    MARK: - Private properties
     
-    private let tokenService = OAuthTokenStorageService()
-    private var networkClient = NetworkClient()
     private (set) var photos: [Photo] = []
     private var lastLoadedPage: Int = 0
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        return formatter
-    }()
+    private let dateFormatter = ISO8601DateFormatter()
+    private let tokenService = OAuthTokenStorageService()
+    private let networkClient = NetworkClient()
     
     //    MARK: - Public methods
     
