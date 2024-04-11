@@ -12,6 +12,8 @@
 		320640CC2BC1A6B500D9566D /* ProfileLikeChangeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320640CB2BC1A6B500D9566D /* ProfileLikeChangeResponse.swift */; };
 		320640CE2BC1A71D00D9566D /* ProfileLogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320640CD2BC1A71D00D9566D /* ProfileLogoutService.swift */; };
 		320640D02BC1F08700D9566D /* ProfileLogoutServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320640CF2BC1F08700D9566D /* ProfileLogoutServiceDelegate.swift */; };
+		320640D32BC87FB200D9566D /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320640D22BC87FB200D9566D /* AlertPresenter.swift */; };
+		320640D52BC8811900D9566D /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320640D42BC8811900D9566D /* AlertModel.swift */; };
 		327566222B9FEF9300131155 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327566212B9FEF9300131155 /* NetworkClient.swift */; };
 		327566242BA0C07400131155 /* OAuthTokenStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327566232BA0C07400131155 /* OAuthTokenStorageService.swift */; };
 		327566272BA0C52D00131155 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327566262BA0C52D00131155 /* SplashViewController.swift */; };
@@ -56,6 +58,8 @@
 		320640CB2BC1A6B500D9566D /* ProfileLikeChangeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLikeChangeResponse.swift; sourceTree = "<group>"; };
 		320640CD2BC1A71D00D9566D /* ProfileLogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoutService.swift; sourceTree = "<group>"; };
 		320640CF2BC1F08700D9566D /* ProfileLogoutServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoutServiceDelegate.swift; sourceTree = "<group>"; };
+		320640D22BC87FB200D9566D /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		320640D42BC8811900D9566D /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		327566212B9FEF9300131155 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		327566232BA0C07400131155 /* OAuthTokenStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenStorageService.swift; sourceTree = "<group>"; };
 		327566262BA0C52D00131155 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +111,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		320640D12BC87DDA00D9566D /* NetworkServices */ = {
+			isa = PBXGroup;
+			children = (
+				327566212B9FEF9300131155 /* NetworkClient.swift */,
+				328F171F2B97A02700346011 /* OAuth2Service.swift */,
+				327566342BAA333000131155 /* ProfileService.swift */,
+				3275663A2BAE26E200131155 /* ProfileImageService.swift */,
+				32F3DA742BBC50D400C0754E /* ImagesListService.swift */,
+				327566302BA9FFA400131155 /* NetworkClientDelegate.swift */,
+			);
+			path = NetworkServices;
+			sourceTree = "<group>";
+		};
 		327566252BA0C50A00131155 /* SplashScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,16 +163,12 @@
 		328F171E2B97A01400346011 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				328F171F2B97A02700346011 /* OAuth2Service.swift */,
-				327566342BAA333000131155 /* ProfileService.swift */,
-				3275663A2BAE26E200131155 /* ProfileImageService.swift */,
-				32F3DA742BBC50D400C0754E /* ImagesListService.swift */,
-				327566212B9FEF9300131155 /* NetworkClient.swift */,
+				320640D12BC87DDA00D9566D /* NetworkServices */,
 				327566232BA0C07400131155 /* OAuthTokenStorageService.swift */,
-				327566302BA9FFA400131155 /* NetworkClientDelegate.swift */,
 				327566322BAA2E3700131155 /* UIBlockingProgressHUD.swift */,
 				320640CD2BC1A71D00D9566D /* ProfileLogoutService.swift */,
 				320640CF2BC1F08700D9566D /* ProfileLogoutServiceDelegate.swift */,
+				320640D22BC87FB200D9566D /* AlertPresenter.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -261,6 +274,7 @@
 			children = (
 				327566382BAC887500131155 /* ProfileData.swift */,
 				32F3DA762BBC8F8D00C0754E /* Photo.swift */,
+				320640D42BC8811900D9566D /* AlertModel.swift */,
 			);
 			path = ModelsUI;
 			sourceTree = "<group>";
@@ -349,6 +363,7 @@
 				328F17192B93D37C00346011 /* AuthViewController.swift in Sources */,
 				32F3DA7B2BBC988C00C0754E /* PhotoListResponseBody.swift in Sources */,
 				320640D02BC1F08700D9566D /* ProfileLogoutServiceDelegate.swift in Sources */,
+				320640D52BC8811900D9566D /* AlertModel.swift in Sources */,
 				3294D94F2B7FA88500776155 /* ProfileViewController.swift in Sources */,
 				32CAB9762B6BFB76001ADBA6 /* ImagesListViewController.swift in Sources */,
 				320640CA2BC1730C00D9566D /* ImagesListCellDelegate.swift in Sources */,
@@ -369,6 +384,7 @@
 				320640CC2BC1A6B500D9566D /* ProfileLikeChangeResponse.swift in Sources */,
 				3294D9532B7FAF7B00776155 /* ProfileExitButton.swift in Sources */,
 				328F171D2B93E96100346011 /* WebViewViewControllerDelegate.swift in Sources */,
+				320640D32BC87FB200D9566D /* AlertPresenter.swift in Sources */,
 				3294D9562B80D52E00776155 /* SingleImageViewController.swift in Sources */,
 				3294D9582B814EEC00776155 /* BackwardButton.swift in Sources */,
 				3275662B2BA232E900131155 /* AuthViewControllerDelegate.swift in Sources */,

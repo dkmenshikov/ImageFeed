@@ -51,7 +51,7 @@ final class ImagesListCell: UITableViewCell {
         cellPicture.kf.cancelDownloadTask()
     }
     
-    @IBAction func likeButtonDidTap(_ sender: Any) {
+    @IBAction private func likeButtonDidTap(_ sender: Any) {
         guard let indexPath else { return }
         delegate?.changeLike(indexPath: indexPath) { [weak self] result in
             guard let self else { return }

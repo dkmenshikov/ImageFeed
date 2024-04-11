@@ -49,9 +49,26 @@ final class ProfileViewController: UIViewController {
     @objc 
     private func logoutButtonDidTap() {
         print ("LOGOUT")
-        profileLogoutService.logout()
-        updateProfileData()
-        updateAvatar()
+        let alertPresenter = AlertPresenter(delegate: self)
+        let alertData = AlertModel(
+            title: "Пока, пока!",
+            text: "Уверены, что хотите выйти?",
+            firstAction: .init(actionText: "Да",
+                               actionCompletion: { [weak self] _ in
+                        guard let self else { return }
+                        alertPresenter.dismissAlert()
+                        profileLogoutService.logout()
+                        updateProfileData()
+                        updateAvatar()
+                    }),
+            secondAction: .init(actionText: "Нет",
+                                actionCompletion: { [weak self] _ in
+                        guard self != nil else { return }
+                        alertPresenter.dismissAlert()
+                    }),
+            accessibilityIdentifier: "Alert"
+        )
+        alertPresenter.showAlert(alertData: alertData)
     }
     
     private func updateAvatar() {

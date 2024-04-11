@@ -90,24 +90,25 @@ final class SingleImageViewController: UIViewController {
     }
     
     private func showError() {
-        let alert = UIAlertController(title: "Что-то пошло не так",
-                                      message: "Попробовать еще раз?",
-                                      preferredStyle: .alert)
-        alert.view.accessibilityIdentifier = "Alert"
-        let actionRepeat = UIAlertAction(title: "Повторить", style: .default, handler: { [weak self] _ in
-            guard let self else { return }
-            alert.dismiss(animated: true, completion: nil)
-            setImage()
-        })
-        let actionNo = UIAlertAction(title: "Не надо", style: .default, handler: { [weak self] _ in
-            guard let self else { return }
-            alert.dismiss(animated: true, completion: nil)
-        })
-        alert.addAction(actionRepeat)
-        alert.addAction(actionNo)
-        self.present(alert, animated: true, completion: nil)
+        let alertPresenter = AlertPresenter(delegate: self)
+        let alertData = AlertModel(
+            title: "Что-то пошло не так",
+            text: "Попробовать еще раз?",
+            firstAction: .init(actionText: "Повторить",
+                               actionCompletion: { [weak self] _ in
+                        guard let self else { return }
+                        alertPresenter.dismissAlert()
+                        setImage()
+                    }),
+            secondAction: .init(actionText: "Не надо",
+                                actionCompletion: { [weak self] _ in
+                        guard self != nil else { return }
+                        alertPresenter.dismissAlert()
+                    }),
+            accessibilityIdentifier: "Alert"
+        )
+        alertPresenter.showAlert(alertData: alertData)
     }
-    
 }
 
 //     MARK: - UIScrollViewDelegate extension

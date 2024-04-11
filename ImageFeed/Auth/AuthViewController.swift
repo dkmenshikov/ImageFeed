@@ -83,19 +83,32 @@ extension AuthViewController: WebViewViewControllerDelegate {
             case .failure(let error):
                 UIBlockingProgressHUD.dismiss()
                 print("[LOG]: \(error)")
-                let alert = UIAlertController(title: "Что-то пошло не так(",
-                                              message: "Не удалось войти в систему",
-                                              preferredStyle: .alert)
-                alert.view.accessibilityIdentifier = "Alert"
-                let action = UIAlertAction(title: "Ок", style: .default, handler: { [weak self] _ in
-                    guard let self else { return }
-                    alert.dismiss(animated: true, completion: nil)
-                    delegate?.failedToLaodToken(self)
-                })
-                alert.addAction(action)
-                DispatchQueue.main.async {
-                    self.present(alert, animated: true, completion: nil)
-                }
+//                let alert = UIAlertController(title: "Что-то пошло не так(",
+//                                              message: "Не удалось войти в систему",
+//                                              preferredStyle: .alert)
+//                alert.view.accessibilityIdentifier = "Alert"
+//                let action = UIAlertAction(title: "Ок", style: .default, handler: { [weak self] _ in
+//                    guard let self else { return }
+//                    alert.dismiss(animated: true, completion: nil)
+//                    delegate?.failedToLaodToken(self)
+//                })
+//                alert.addAction(action)
+//                DispatchQueue.main.async {
+//                    self.present(alert, animated: true, completion: nil)
+//                }
+                let alertPresenter = AlertPresenter(delegate: self)
+                let alertData = AlertModel(
+                    title: "Что-то пошло не так(",
+                    text: "Не удалось войти в систему",
+                    firstAction: .init(actionText: "Ок",
+                                       actionCompletion: { [weak self] _ in
+                                guard let self else { return }
+                                alertPresenter.dismissAlert()
+                                delegate?.failedToLaodToken(self)
+                            }),
+                    accessibilityIdentifier: "Alert"
+                )
+                alertPresenter.showAlert(alertData: alertData)
             }
         }
     }
