@@ -31,14 +31,13 @@ final class ImagesListViewController: UIViewController, ImagesListCellDelegate, 
         imagesListService.changeLike(photoID: photos[indexPath.row].id,
                                      isLiked: photos[indexPath.row].isLiked) { [weak self] (result: Result<PhotoLikeChanged, any Error>) in
             guard let self else { return }
+            UIBlockingProgressHUD.dismiss()
             switch result {
             case .success(let photo):
                 self.photos[indexPath.row].isLiked = photo.likedByUser
-                UIBlockingProgressHUD.dismiss()
                 completion(true)
             case .failure(let error):
                 print("[LOG]: failure of updating like status, \(error)")
-                UIBlockingProgressHUD.dismiss()
                 completion(false)
             }
         }
