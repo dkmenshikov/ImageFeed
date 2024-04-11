@@ -44,6 +44,10 @@ final class ProfileViewController: UIViewController {
         exitButton.addTarget(self, action: #selector(logoutButtonDidTap), for: .touchUpInside)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(profileImageServiceObserver)
+    }
+    
 //    MARK: - Private methods
     
     @objc 

@@ -69,6 +69,10 @@ final class ImagesListViewController: UIViewController, ImagesListCellDelegate, 
         ProfileLogoutService.shared.delegate = self
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(imagesListServiceObserver)
+    }
+    
 //    MARK: - Private methods
     
     private func setTableView() {
