@@ -22,6 +22,8 @@ final class ProfileViewController: UIViewController {
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
+    private var profileLogoutService = ProfileLogoutService.shared
+    
     //    MARK: - Lyfecycle
     
     override func viewDidLoad() {
@@ -39,17 +41,49 @@ final class ProfileViewController: UIViewController {
             }
         
         updateAvatar()
-        
+        exitButton.addTarget(self, action: #selector(logoutButtonDidTap), for: .touchUpInside)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(profileImageServiceObserver)
     }
     
 //    MARK: - Private methods
+    
+    @objc 
+    private func logoutButtonDidTap() {
+        print ("LOGOUT")
+        let alertPresenter = AlertPresenter(delegate: self)
+        let alertData = AlertModel(
+            title: "Пока, пока!",
+            text: "Уверены, что хотите выйти?",
+            firstAction: .init(actionText: "Да",
+                               actionCompletion: { [weak self] _ in
+                        guard let self else { return }
+                        alertPresenter.dismissAlert()
+                        profileLogoutService.logout()
+                        updateProfileData()
+                        updateAvatar()
+                    }),
+            secondAction: .init(actionText: "Нет",
+                                actionCompletion: { [weak self] _ in
+                        guard self != nil else { return }
+                        alertPresenter.dismissAlert()
+                    }),
+            accessibilityIdentifier: "Alert"
+        )
+        alertPresenter.showAlert(alertData: alertData)
+    }
     
     private func updateAvatar() {
         let profileImageService = ProfileImageService.shared
         guard
             let profileImageURL = profileImageService.profileImageURL,
             let url = URL(string: profileImageURL)
-        else { return }
+        else {
+            userpicImageView.image = UIImage.userPicStub
+            return
+        }
         userpicImageView.contentMode = .scaleAspectFill
         userpicImageView.kf.indicatorType = .activity
         let processor = RoundCornerImageProcessor(cornerRadius: 25)
@@ -68,7 +102,9 @@ final class ProfileViewController: UIViewController {
         let profileService = ProfileService.shared
         let profileData = profileService.profile
         nameLabel.text = profileData.name
-        nicknameLabel.text = "@"+profileData.username
+        if profileData.username != "" {
+            nicknameLabel.text = "@"+profileData.username
+        }
         bioLabel.text = profileData.bio
     }
     

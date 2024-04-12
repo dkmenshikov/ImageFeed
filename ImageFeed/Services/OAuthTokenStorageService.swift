@@ -22,5 +22,9 @@ final class OAuthTokenStorageService {
             keychainWrapper.set(newValue, forKey: authTokenKey)
         }
     }
+    
+    func clearTokenInfo() {
+        keychainWrapper.removeObject(forKey: authTokenKey)
+    }
 }
 

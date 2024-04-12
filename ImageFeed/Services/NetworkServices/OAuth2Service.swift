@@ -26,7 +26,7 @@ final class OAuth2Service: NetworkClientDelegate {
     
 //    MARK: - Private properties
     
-    private var networkClient = NetworkClient()
+    private let networkClient = NetworkClient()
     private var lastCode: String?
     
 //    MARK: - Public methods

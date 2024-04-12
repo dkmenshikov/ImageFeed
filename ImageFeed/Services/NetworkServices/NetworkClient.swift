@@ -53,6 +53,8 @@ class NetworkClient {
                         let response = try decoder.decode(Response.self, from: data)
                         fulfillCompletionOnTheMainThread(.success(response))
                     } catch {
+                        print("[LOG][NetworkClient]: JSON DECODING FAILURE")
+                        print("Raw JSON: \n", String(data: data, encoding: .utf8))
                         fulfillCompletionOnTheMainThread(.failure(NetworkClientError.decodingError))
                     }
                 }
