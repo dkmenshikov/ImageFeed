@@ -38,10 +38,8 @@ final class AuthHelper: AuthHelperprotocol {
             return nil
         }
     }
-    
-//    MARK: - Private methods
-    
-    private func authURL() -> URL? {
+
+    func authURL() -> URL? {
         guard var urlComponents = URLComponents(string: WebConstants.unsplashAuthorizeURLString) else {
             assertionFailure("Invalid Auth URL")
             return nil

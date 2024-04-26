@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol WebViewPresenterProtocol: AnyObject {
+public protocol WebViewPresenterProtocol: AnyObject {
     var view: WebViewControllerProtocol? { get set }
     func viewDidLoad()
     func didUpdateProgressValue(_ newValue: Double)
@@ -49,9 +49,7 @@ final class WebViewPresenter: WebViewPresenterProtocol {
         return authHelper.code(from: url)
     }
     
-//    MARK: - Private methods
-    
-    private func shouldHideProgress(for value: Float) -> Bool {
+    func shouldHideProgress(for value: Float) -> Bool {
         return abs(value - 1) <= 0.0001
     }
     
