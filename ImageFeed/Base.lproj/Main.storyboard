@@ -46,6 +46,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MtG-Y4-DBg">
                                 <rect key="frame" x="16" y="529" width="343" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="YL6-nU-FPL"/>
                                 </constraints>
@@ -75,6 +78,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xQY-6q-6j9"/>
+                    <connections>
+                        <outlet property="loginButton" destination="MtG-Y4-DBg" id="fnE-KW-iFx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fqa-CW-0aP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

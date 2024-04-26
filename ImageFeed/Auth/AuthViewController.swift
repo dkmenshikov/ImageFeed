@@ -9,20 +9,24 @@ import UIKit
 import ProgressHUD
 
 final class AuthViewController: UIViewController {
-
-//    MARK: - Delegate properties
+    
+    //    MARK: - IBOutlets
+    
+    @IBOutlet weak var loginButton: UIButton!
+    
+    //    MARK: - Delegate properties
     
     weak var delegate: AuthViewControllerDelegate?
     
-//    MARK: - Sinletones shared instances
+    //    MARK: - Sinletones shared instances
     
     private let o2AuthShared = OAuth2Service.shared
     
-//    MARK: - Private properties
+    //    MARK: - Private properties
     
     private let segueID = "ShowWebView"
     
-//    MARK: - Lyfecycle
+    //    MARK: - Lyfecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,14 +36,15 @@ final class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
+        loginButton.accessibilityIdentifier = "Authenticate"
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-//    MARK: - Override methods
+    //    MARK: - Override methods
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueID {
@@ -58,7 +63,7 @@ final class AuthViewController: UIViewController {
         }
     }
     
-//    MARK: - Private methods
+    //    MARK: - Private methods
     
     private func configureNavigationBar() {
         navigationController?.navigationBar.backgroundColor = UIColor.ypWhite
@@ -93,10 +98,10 @@ extension AuthViewController: WebViewViewControllerDelegate {
                     text: "Не удалось войти в систему",
                     firstAction: .init(actionText: "Ок",
                                        actionCompletion: { [weak self] _ in
-                                guard let self else { return }
-                                alertPresenter.dismissAlert()
-                                delegate?.failedToLaodToken(self)
-                            }),
+                                           guard let self else { return }
+                                           alertPresenter.dismissAlert()
+                                           delegate?.failedToLaodToken(self)
+                                       }),
                     accessibilityIdentifier: "Alert"
                 )
                 alertPresenter.showAlert(alertData: alertData)
