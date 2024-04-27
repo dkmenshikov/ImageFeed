@@ -27,7 +27,6 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 //    MARK: - Public methods
     
     func logout() {
-        print("Presenter")
         profileLogoutService.logout()
         updateProfileData()
         updateAvatar()
@@ -43,7 +42,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
         }
         let bio = profileData.bio
         
-        view?.updateProfileData(name: name, nickname: nickname, bio: bio)
+        view?.updateProfileData(profile: ProfileData(username: nickname, name: name, bio: bio))
     }
     
     func updateAvatar() {

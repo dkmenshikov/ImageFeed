@@ -12,7 +12,7 @@ public protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfilePresenterProtocol? { get set }
     func configure(presenter: ProfilePresenterProtocol)
     func updateAvatar(url: URL?)
-    func updateProfileData(name: String, nickname: String, bio: String)
+    func updateProfileData(profile: ProfileData)
 }
 
 final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
@@ -64,10 +64,10 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         presenter.view = self
     }
     
-    func updateProfileData(name: String, nickname: String, bio: String) {
-        nameLabel.text = name
-        nicknameLabel.text = nickname
-        bioLabel.text = bio
+    func updateProfileData(profile: ProfileData) {
+        nameLabel.text = profile.name
+        nicknameLabel.text = profile.username
+        bioLabel.text = profile.bio
     }
     
     func updateAvatar(url: URL?) {
