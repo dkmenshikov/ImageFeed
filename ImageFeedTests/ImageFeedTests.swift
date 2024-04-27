@@ -103,26 +103,26 @@ final class WebViewTest: XCTestCase {
         XCTAssertEqual(code, testcode)
     }
     
-//    MARK: - Profile screen tests
+    //    MARK: - Profile screen tests
     
     func testProfilePresenterUpdatesDataAfterControllersViewDidLoad() {
         
-//        GIVEN
+        //        GIVEN
         let vc = ProfileViewController()
         let presenter = ProfilePresenterSpy()
         vc.configure(presenter: presenter)
         
-//        WHEN
+        //        WHEN
         _ = vc.view
         
-//        THEN
+        //        THEN
         XCTAssertTrue(presenter.isUpdateAvatarCalled)
         XCTAssertTrue(presenter.isUpdateProfileCalled)
     }
     
     func testProfilePresenterClearsUserDataAfterLogout() {
         
-//        GIVEN
+        //        GIVEN
         let presenter = ProfilePresenter()
         let tokenStorageService = OAuthTokenStorageService()
         let profileService = ProfileService.shared
@@ -133,10 +133,10 @@ final class WebViewTest: XCTestCase {
         let emptyProfileInfo = ProfileData(username: "", name: "", bio: "")
         let imageURL = imageService.profileImageURL
         
-//        WHEN
+        //        WHEN
         presenter.logout()
         
-//        THEN
+        //        THEN
         XCTAssertNil(token)
         XCTAssertEqual(profileInfo, emptyProfileInfo)
         XCTAssertNil(imageURL)
@@ -144,16 +144,19 @@ final class WebViewTest: XCTestCase {
     
     func testViewControllerConfigureLinksWithPresenter() {
         
-//        GIVEN
+        //        GIVEN
         let vc = ProfileViewController()
         let presenter = ProfilePresenter()
         
-//        WHEN
+        //        WHEN
         vc.configure(presenter: presenter)
         
-//        THEN
+        //        THEN
         XCTAssertTrue(vc === presenter.view)
         XCTAssertTrue(vc.presenter === presenter)
     }
+    
+    //    MARK: - ImagesList screen tests
+    
     
 }

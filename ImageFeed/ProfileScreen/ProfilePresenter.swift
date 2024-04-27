@@ -9,9 +9,11 @@ import Foundation
 
 public protocol ProfilePresenterProtocol: AnyObject {
     var view: ProfileViewControllerProtocol? { get set }
+    
     func logout()
     func updateProfileData()
     func updateAvatar()
+    func viewDidLoad()
 }
 
 final class ProfilePresenter: ProfilePresenterProtocol {
@@ -23,8 +25,23 @@ final class ProfilePresenter: ProfilePresenterProtocol {
 //    MARK: - Private properties
     
     private var profileLogoutService = ProfileLogoutService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
 
 //    MARK: - Public methods
+    
+    func viewDidLoad() {
+        updateProfileData()
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                updateAvatar()
+            }
+        updateAvatar()
+    }
     
     func logout() {
         profileLogoutService.logout()
@@ -55,6 +72,10 @@ final class ProfilePresenter: ProfilePresenterProtocol {
             return
         }
         view?.updateAvatar(url: url)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(profileImageServiceObserver)
     }
     
 }

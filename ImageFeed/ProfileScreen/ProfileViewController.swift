@@ -31,30 +31,12 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     private var userpicImageView = UIImageView()
     private var exitButton = ProfileExitButton()
     
-    private var profileImageServiceObserver: NSObjectProtocol?
-    
     //    MARK: - Lyfecycle
     
     override func viewDidLoad() {
         setViews()
-        presenter?.updateProfileData()
-        
-        profileImageServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: ProfileImageService.didChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.presenter?.updateAvatar()
-            }
-        
-        presenter?.updateAvatar()
+        presenter?.viewDidLoad()
         exitButton.addTarget(self, action: #selector(logoutButtonDidTap), for: .touchUpInside)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(profileImageServiceObserver)
     }
     
 //    MARK: - Public methods
