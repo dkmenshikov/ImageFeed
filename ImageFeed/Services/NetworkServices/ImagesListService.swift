@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ImagesListService: NetworkClientDelegate {
+final public class ImagesListService: NetworkClientDelegate {
     
     init() {
         networkClient.delegate = self

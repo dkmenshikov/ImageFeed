@@ -14,12 +14,14 @@ final class ProfileExitButton: UIButton {
         super.init(frame: CGRect(x: 0, y: 0, width: 20, height: 24))
         setTitle("", for: [])
         setImage(.profileExitButton, for: [])
+        accessibilityIdentifier = "logoutButton"
     }
         
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setTitle("", for: [])
         setImage(.profileExitButton, for: [])
+        accessibilityIdentifier = "logoutButton"
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {

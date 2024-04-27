@@ -29,6 +29,7 @@ final class ImagesListCell: UITableViewCell {
     }()
     
     func configCell(with indexPath: IndexPath, photo: Photo, delegate: ImagesListCellDelegate)  {
+        likeButton.accessibilityIdentifier = "likeButton"
         cellPicture.contentMode = .scaleAspectFill
         cellPicture.kf.indicatorType = .activity
         cellPicture.kf.setImage(with: photo.thumbImageURL,

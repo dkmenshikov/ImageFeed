@@ -8,7 +8,18 @@
 import Kingfisher
 import UIKit
 
-final class ProfileViewController: UIViewController {
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func configure(presenter: ProfilePresenterProtocol)
+    func updateAvatar(url: URL?)
+    func updateProfileData(profile: ProfileData)
+}
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
+    
+//    MARK: - Presenter
+    
+    var presenter: ProfilePresenterProtocol?
     
     //    MARK: - Private properties (screen views)
     
@@ -20,67 +31,29 @@ final class ProfileViewController: UIViewController {
     private var userpicImageView = UIImageView()
     private var exitButton = ProfileExitButton()
     
-    private var profileImageServiceObserver: NSObjectProtocol?
-    
-    private var profileLogoutService = ProfileLogoutService.shared
-    
     //    MARK: - Lyfecycle
     
     override func viewDidLoad() {
         setViews()
-        updateProfileData()
-        
-        profileImageServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: ProfileImageService.didChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
-        
-        updateAvatar()
+        presenter?.viewDidLoad()
         exitButton.addTarget(self, action: #selector(logoutButtonDidTap), for: .touchUpInside)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(profileImageServiceObserver)
+//    MARK: - Public methods
+    
+    func configure(presenter: ProfilePresenterProtocol) {
+        self.presenter = presenter
+        presenter.view = self
     }
     
-//    MARK: - Private methods
-    
-    @objc 
-    private func logoutButtonDidTap() {
-        print ("LOGOUT")
-        let alertPresenter = AlertPresenter(delegate: self)
-        let alertData = AlertModel(
-            title: "Пока, пока!",
-            text: "Уверены, что хотите выйти?",
-            firstAction: .init(actionText: "Да",
-                               actionCompletion: { [weak self] _ in
-                        guard let self else { return }
-                        alertPresenter.dismissAlert()
-                        profileLogoutService.logout()
-                        updateProfileData()
-                        updateAvatar()
-                    }),
-            secondAction: .init(actionText: "Нет",
-                                actionCompletion: { [weak self] _ in
-                        guard self != nil else { return }
-                        alertPresenter.dismissAlert()
-                    }),
-            accessibilityIdentifier: "Alert"
-        )
-        alertPresenter.showAlert(alertData: alertData)
+    func updateProfileData(profile: ProfileData) {
+        nameLabel.text = profile.name
+        nicknameLabel.text = profile.username
+        bioLabel.text = profile.bio
     }
     
-    private func updateAvatar() {
-        let profileImageService = ProfileImageService.shared
-        guard
-            let profileImageURL = profileImageService.profileImageURL,
-            let url = URL(string: profileImageURL)
-        else {
+    func updateAvatar(url: URL?) {
+        guard let url else {
             userpicImageView.image = UIImage.userPicStub
             return
         }
@@ -98,14 +71,28 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    private func updateProfileData() {
-        let profileService = ProfileService.shared
-        let profileData = profileService.profile
-        nameLabel.text = profileData.name
-        if profileData.username != "" {
-            nicknameLabel.text = "@"+profileData.username
-        }
-        bioLabel.text = profileData.bio
+//    MARK: - Private methods
+    
+    @objc 
+    private func logoutButtonDidTap() {
+        let alertPresenter = AlertPresenter(delegate: self)
+        let alertData = AlertModel(
+            title: "Пока, пока!",
+            text: "Уверены, что хотите выйти?",
+            firstAction: .init(actionText: "Да",
+                               actionCompletion: { [weak self] _ in
+                        guard let self else { return }
+                        alertPresenter.dismissAlert()
+                        presenter?.logout()
+                    }),
+            secondAction: .init(actionText: "Нет",
+                                actionCompletion: { [weak self] _ in
+                        guard self != nil else { return }
+                        alertPresenter.dismissAlert()
+                    }),
+            accessibilityIdentifier: "Alert"
+        )
+        alertPresenter.showAlert(alertData: alertData)
     }
     
 }
