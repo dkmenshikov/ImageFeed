@@ -142,7 +142,7 @@ final class WebViewTest: XCTestCase {
         XCTAssertNil(imageURL)
     }
     
-    func testViewControllerConfigureLinksWithPresenter() {
+    func testProfileViewControllerConfigureLinksWithPresenter() {
         
         //        GIVEN
         let vc = ProfileViewController()
@@ -158,5 +158,32 @@ final class WebViewTest: XCTestCase {
     
     //    MARK: - ImagesList screen tests
     
+    func testImagesListViewControllerConfigureLinksWithPresenter() {
+        
+        //        GIVEN
+        let vc = ImagesListViewController()
+        let presenter = ImagesListPresenter()
+        
+        //        WHEN
+        vc.configure(presenter: presenter)
+        
+        //        THEN
+        XCTAssertTrue(vc === presenter.view)
+        XCTAssertTrue(vc.presenter === presenter)
+    }
+    
+    func testCleanPhotos() {
+        
+        //        GIVEN
+        let vc = ImagesListViewController()
+        let presenter = ImagesListPresenter()
+        vc.configure(presenter: presenter)
+        
+        //        WHEN
+        presenter.cleanImagesList()
+        
+        //        THEN
+        XCTAssert(presenter.photos == [])
+    }
     
 }

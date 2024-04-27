@@ -15,6 +15,11 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
     
     var view: (any ImageFeed.ProfileViewControllerProtocol)?
     
+    func viewDidLoad() {
+        updateProfileData()
+        updateAvatar()
+    }
+    
     func logout() {
         
     }
